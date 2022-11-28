@@ -10,7 +10,9 @@ app.use(express.json());
 const prisma = new PrismaClient();
 
 import signupRouter from "./routes/auth/signup";
+import signinRouter from "./routes/auth/signin";
 app.use("/signup", signupRouter);
+app.use("/signin", signinRouter);
 
 app.listen(port, () => {
   console.log(`server running on port ${port}`);

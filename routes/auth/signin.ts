@@ -3,14 +3,19 @@ import { body, validationResult } from "express-validator";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 
-const signupRouter = express.Router();
+const signinRouter = express.Router();
 const prisma = new PrismaClient();
 
-signupRouter.get("/", (req, res) => {
-  return res.json({ info: "this is the signup page" });
+signinRouter.get("/", (req, res) => {
+  return res.json({ info: "this is the sign up page" });
 });
 
-signupRouter.post(
+interface FindUser {
+  username?: string;
+  password?: string;
+}
+
+signinRouter.post(
   "/",
   body("username")
     .trim()
@@ -31,26 +36,21 @@ signupRouter.post(
       return res.json({ errors: errors.array({ onlyFirstError: true }) });
     }
 
-    const isUserNameTaken = await prisma.user.findFirst({
+    const findUser: FindUser | null = await prisma.user.findFirst({
       where: {
         username: req.body.username,
       },
     });
-    console.log(isUserNameTaken);
 
-    if (isUserNameTaken !== null) return res.json({ info: "username taken" });
+    if (findUser === null)
+      return res.json({ info: "username or password are incorrect" });
 
-    const saltRounds = 10;
-    const salt = bcrypt.genSaltSync(saltRounds);
-    const password = bcrypt.hashSync(req.body.password, salt);
-    await prisma.user.create({
-      data: {
-        username: req.body.username,
-        password: password,
-      },
-    });
-    return;
+    const match = await bcrypt.compare(req.body.password, findUser.password!);
+
+    return match
+      ? res.json({ info: "logged in" })
+      : res.json({ info: "username or password were not correct" });
   }
 );
 
-export default signupRouter;
+export default signinRouter;

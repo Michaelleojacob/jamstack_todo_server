@@ -3,5 +3,15 @@ content-type: application/json
 
 {
     "username": "migs",
-    "password": "password"
+    "password": "lol"
+}
+
+###
+
+POST http://localhost:3003/signin
+content-type: application/json
+
+{
+    "username": "migs",
+    "password": "lol"
 }
