@@ -3,7 +3,7 @@ content-type: application/json
 
 {
     "username": "migs",
-    "password": "lol"
+    "password": "wigs"
 }
 
 ###
@@ -12,6 +12,6 @@ POST http://localhost:3003/signin
 content-type: application/json
 
 {
-    "username": "migs",
-    "password": "lol"
+    "username": "jj",
+    "password": "l"
 }

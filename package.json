@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch": "npx nodemon app.ts",
-    "test":"npx ts-node db_testing.ts"
+    "dev": "npx nodemon app.ts",
+    "killdb": "npx ts-node killdb.ts"
   },
   "keywords": [],
   "author": "",
@@ -15,12 +15,12 @@
     "@types/express": "^4.17.14",
     "@types/node": "^18.11.9",
     "nodemon": "^2.0.20",
-    "prisma": "^4.6.1",
+    "prisma": "^4.7.0",
     "ts-node": "^10.9.1",
     "typescript": "^4.9.3"
   },
   "dependencies": {
-    "@prisma/client": "^4.6.1",
+    "@prisma/client": "^4.7.0",
     "bcrypt": "^5.1.0",
     "express": "^4.18.2",
     "express-validator": "^6.14.2"
