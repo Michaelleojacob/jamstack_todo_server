@@ -17,20 +17,24 @@ interface FindUser {
 }
 
 signinRouter.post("/", validateSignIn, async (req: Request, res: Response) => {
-  const findUser: FindUser | null = await prisma.user.findFirst({
-    where: {
-      username: req.body.username,
-    },
-  });
+  try {
+    const findUser: FindUser | null = await prisma.user.findFirst({
+      where: {
+        username: req.body.username,
+      },
+    });
 
-  if (findUser === null)
-    return res.json({ info: "username or password are incorrect" });
+    if (findUser === null)
+      return res.json({ info: "username or password are incorrect" });
 
-  const match = await bcrypt.compare(req.body.password, findUser.password!);
+    const match = await bcrypt.compare(req.body.password, findUser.password!);
 
-  return match
-    ? res.json({ info: "logged in" })
-    : res.json({ info: "username or password were not correct" });
+    return match
+      ? res.json({ info: "logged in" })
+      : res.json({ info: "username or password were not correct" });
+  } catch (e) {
+    res.status(500).json({ info: "error at signin POST" });
+  }
 });
 
 export default signinRouter;
