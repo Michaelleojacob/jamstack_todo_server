@@ -3,17 +3,13 @@ import { Request, Response, NextFunction } from "express";
 import prisma from "../../config/db";
 import bcrypt from "bcrypt";
 import validateSignIn from "../../validations/signin";
+import { FindUser } from "../../types/types";
 
 const signinRouter = express.Router();
 
 signinRouter.get("/", (req: Request, res: Response) => {
   return res.json({ info: "this is the sign up page" });
 });
-
-interface FindUser {
-  username?: string;
-  password?: string;
-}
 
 signinRouter.post("/", validateSignIn, async (req: Request, res: Response) => {
   try {
