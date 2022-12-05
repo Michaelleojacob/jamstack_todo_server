@@ -8,10 +8,6 @@ import createToken from "../../utils/auth/createToken";
 
 const signinRouter = express.Router();
 
-signinRouter.get("/", (req: Request, res: Response) => {
-  return res.json({ info: "this is the sign up page" });
-});
-
 // log in
 signinRouter.post("/", validateSignIn, async (req: Request, res: Response) => {
   try {
