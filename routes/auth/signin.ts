@@ -1,9 +1,10 @@
 import express from "express";
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import prisma from "../../config/db";
 import bcrypt from "bcrypt";
 import validateSignIn from "../../validations/signin";
-import { FindUser } from "../../types/types";
+import { User } from "../../types/types";
+import createToken from "../../utils/auth/createToken";
 
 const signinRouter = express.Router();
 
@@ -11,24 +12,42 @@ signinRouter.get("/", (req: Request, res: Response) => {
   return res.json({ info: "this is the sign up page" });
 });
 
+// log in
 signinRouter.post("/", validateSignIn, async (req: Request, res: Response) => {
   try {
-    const findUser: FindUser | null = await prisma.user.findFirst({
+    // check if the user exists
+    const user: User | null = await prisma.user.findUnique({
       where: {
         username: req.body.username,
       },
     });
 
-    if (findUser === null)
-      return res.json({ info: "username or password are incorrect" });
+    // no user found
+    if (user === null)
+      return res.status(404).json({ info: "incorrect username or password" });
 
-    const match = await bcrypt.compare(req.body.password, findUser.password!);
+    // user was found, check password
+    const match = await bcrypt.compare(req.body.password, user.password!);
 
-    return match
-      ? res.json({ info: "logged in" })
-      : res.json({ info: "username or password were not correct" });
-  } catch (e) {
-    res.status(500).json({ info: "error at signin POST" });
+    // incorrect passowrd
+    if (!match)
+      return res.status(403).json({ info: " incorrect username or password" });
+
+    /**
+     * correct username and password
+     * make token
+     * append token to Request
+     */
+
+    const token = createToken(user);
+    req.token = token;
+
+    res.status(200).json({ info: "+logged in. +token created" });
+
+    req;
+  } catch (err) {
+    console.log(err);
+    res.status(502).json({ info: "signin POST error" });
   }
 });
 
