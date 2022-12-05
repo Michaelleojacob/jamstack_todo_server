@@ -1,11 +1,10 @@
 import express from "express";
 import { Request, Response, NextFunction } from "express";
-import { PrismaClient } from "@prisma/client";
+import prisma from "../../config/db";
 import bcrypt from "bcrypt";
 import validateSignIn from "../../validations/signin";
 
 const signinRouter = express.Router();
-const prisma = new PrismaClient();
 
 signinRouter.get("/", (req: Request, res: Response) => {
   return res.json({ info: "this is the sign up page" });
