@@ -6,6 +6,14 @@ import validateSignIn from "../../validations/signin";
 import { User } from "../../types/types";
 import createToken from "../../utils/auth/createToken";
 
+declare global {
+  namespace Express {
+    export interface Request {
+      token?: string;
+    }
+  }
+}
+
 const signinRouter = express.Router();
 
 // log in
@@ -38,9 +46,8 @@ signinRouter.post("/", validateSignIn, async (req: Request, res: Response) => {
     const token = createToken(user);
     req.token = token;
 
-    res.status(200).json({ info: "+logged in. +token created" });
-
-    req;
+    res.cookie("token", token);
+    return res.status(200).json({ info: "+logged in. +token created", token });
   } catch (err) {
     console.log(err);
     res.status(502).json({ info: "signin POST error" });

@@ -1,0 +1,19 @@
+post http://localhost:3002/signup
+content-type: application/json
+
+{
+  "username": "a",
+  "password": "a"
+}
+
+###
+post http://localhost:3002/signin
+Content-Type: application/json
+
+{
+  "username":"a",
+  "password":"a"
+}
+
+###
+get http://localhost:3002/protected
