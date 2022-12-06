@@ -6,14 +6,6 @@ import validateSignIn from "../../validations/signin";
 import { User } from "../../types/types";
 import createToken from "../../utils/auth/createToken";
 
-declare global {
-  namespace Express {
-    export interface Request {
-      token?: string;
-    }
-  }
-}
-
 const signinRouter = express.Router();
 
 // log in
@@ -39,13 +31,15 @@ signinRouter.post("/", validateSignIn, async (req: Request, res: Response) => {
 
     /**
      * correct username and password
-     * make token
-     * append token to Request
+     *
+     * delete password from user
+     * make token using user name and user id
+     *
+     * add token to cookies
      */
 
     delete user.password;
     const token = createToken(user);
-    req.token = token;
 
     res.cookie("token", token, { signed: true });
     return res.status(200).json({ info: "+logged in. +token created", token });

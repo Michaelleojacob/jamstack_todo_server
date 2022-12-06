@@ -17,3 +17,6 @@ Content-Type: application/json
 
 ###
 get http://localhost:3002/protected
+
+###
+get http://localhost:3002/signout

@@ -1,7 +1,8 @@
 import { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
+import jwt, { Jwt, JwtPayload } from "jsonwebtoken";
+import { CRequest } from "../../types/types";
 
-const verifyToken = (req: Request, res: Response, next: NextFunction) => {
+const verifyToken = (req: CRequest, res: Response, next: NextFunction) => {
   try {
     // get token
     const token = req.signedCookies.token;
@@ -14,7 +15,17 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
      * or
      * verify throws error, and catch happens
      */
-    jwt.verify(token, process.env.TOKEN_SECRET!);
+    const decoded = jwt.verify(token, process.env.TOKEN_SECRET!) as JwtPayload;
+
+    /**
+     * break down the info from decoded and add it to req
+     * so we can use it in the next() function
+     */
+
+    const { iat, exp } = decoded;
+    const { id, username } = decoded.user;
+
+    req.data = { username, id, iat, exp };
 
     next();
   } catch (e) {
