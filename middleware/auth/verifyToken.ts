@@ -1,11 +1,11 @@
-import { Request, Response, NextFunction } from "express";
-import jwt, { Jwt, JwtPayload } from "jsonwebtoken";
+import { Response, NextFunction } from "express";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import { CRequest } from "../../types/types";
 
 const verifyToken = (req: CRequest, res: Response, next: NextFunction) => {
   try {
     // get token
-    const token = req.signedCookies.token;
+    const { token } = req.signedCookies;
 
     // if no token
     if (!token) return res.status(403).json({ err: "no token" });

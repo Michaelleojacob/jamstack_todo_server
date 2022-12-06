@@ -3,14 +3,17 @@ import { Request, Response } from "express";
 import prisma from "../../config/db";
 import bcrypt from "bcrypt";
 import validateSignIn from "../../validations/signin";
-import { User } from "../../types/types";
+import { CRequest, User } from "../../types/types";
 import createToken from "../../utils/auth/createToken";
 
 const signinRouter = express.Router();
 
 // log in
-signinRouter.post("/", validateSignIn, async (req: Request, res: Response) => {
+signinRouter.post("/", validateSignIn, async (req: CRequest, res: Response) => {
   try {
+    // if there is a token, clear it
+    if (req.token) res.clearCookie("token");
+
     // check if the user exists
     const user: User | null = await prisma.user.findUnique({
       where: {
