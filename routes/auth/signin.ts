@@ -43,10 +43,11 @@ signinRouter.post("/", validateSignIn, async (req: Request, res: Response) => {
      * append token to Request
      */
 
+    delete user.password;
     const token = createToken(user);
     req.token = token;
 
-    res.cookie("token", token);
+    res.cookie("token", token, { signed: true });
     return res.status(200).json({ info: "+logged in. +token created", token });
   } catch (err) {
     console.log(err);

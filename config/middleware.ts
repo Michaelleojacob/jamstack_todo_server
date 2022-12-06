@@ -8,7 +8,7 @@ const middlewareConfig = (app: Application) => {
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
   app.use(cors());
-  app.use(cookieParser());
+  app.use(cookieParser(process.env.COOKIE_SECRET));
 };
 
 export default middlewareConfig;
