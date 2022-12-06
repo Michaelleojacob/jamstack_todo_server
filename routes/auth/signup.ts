@@ -24,7 +24,7 @@ signupRouter.post("/", validateSignUp, async (req: Request, res: Response) => {
     });
     return res.status(400).json({ info: `user ${user.username} created` });
   } catch (e) {
-    res.status(500).json({ info: "error at signup POST" });
+    console.log("error at signup post", e);
   }
 });
 

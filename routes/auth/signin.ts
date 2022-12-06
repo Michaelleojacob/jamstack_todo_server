@@ -43,9 +43,8 @@ signinRouter.post("/", validateSignIn, async (req: Request, res: Response) => {
 
     res.cookie("token", token, { signed: true });
     return res.status(200).json({ info: "+logged in. +token created", token });
-  } catch (err) {
-    console.log(err);
-    res.status(502).json({ info: "signin POST error" });
+  } catch (e) {
+    console.log(`error in signin post`, e);
   }
 });
 
