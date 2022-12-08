@@ -8,7 +8,7 @@ datasource db {
 }
 
 model User {
-  id       Int       @id @default(autoincrement())
+  id       Int       @id @default(autoincrement()) @unique
   username String    @unique
   password String
   projects Project[]
@@ -16,20 +16,22 @@ model User {
 }
 
 model Todo {
-  id        Int      @id @default(autoincrement())
+  id        Int      @id @default(autoincrement()) @unique
   title     String
-  desc      String
-  prio      String
-  due       DateTime
+  desc      String?
+  notes     String?
+  prio      String?
+  creation  String
+  due       String?
   done      Boolean  @default(false)
   authorId  Int
-  projectId Int
+  projectId Int?
   author    User     @relation(fields: [authorId], references: [id])
-  project   Project  @relation(fields: [projectId], references: [id])
+  project   Project?  @relation(fields: [projectId], references: [id])
 }
 
 model Project {
-  id       Int    @id @default(autoincrement())
+  id       Int    @id @default(autoincrement()) @unique
   title    String @unique
   authorId Int
   author   User   @relation(fields: [authorId], references: [id])

@@ -44,7 +44,9 @@ signinRouter.post("/", validateSignIn, async (req: CRequest, res: Response) => {
     delete user.password;
     const token = createToken(user);
 
-    res.cookie("token", token, { signed: true });
+    res.cookie("token", token, {
+      signed: true,
+    });
     return res.status(200).json({ info: "+logged in. +token created", token });
   } catch (e) {
     console.log(`error in signin post`, e);
