@@ -25,7 +25,7 @@ const verifyToken = (req: CRequest, res: Response, next: NextFunction) => {
     const { iat, exp } = decoded;
     const { id, username } = decoded.user;
 
-    req.data = { username, id, iat, exp };
+    req.userData = { username, id, iat, exp };
 
     next();
   } catch (e) {

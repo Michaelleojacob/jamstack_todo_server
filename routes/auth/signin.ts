@@ -1,10 +1,10 @@
 import express from "express";
-import { Request, Response } from "express";
-import prisma from "../../config/db";
-import bcrypt from "bcrypt";
+import { Response } from "express";
 import validateSignIn from "../../validations/signin";
 import { CRequest, User } from "../../types/types";
 import createToken from "../../utils/auth/createToken";
+import { findUserByUserName } from "../../utils/db/users";
+import { comparePassword } from "../../utils/auth/bcrypt";
 
 const signinRouter = express.Router();
 
@@ -15,18 +15,14 @@ signinRouter.post("/", validateSignIn, async (req: CRequest, res: Response) => {
     if (req.token) res.clearCookie("token");
 
     // check if the user exists
-    const user: User | null = await prisma.user.findUnique({
-      where: {
-        username: req.body.username,
-      },
-    });
+    const user: User | null = await findUserByUserName(req.body.username);
 
     // no user found
-    if (user === null)
+    if (!user)
       return res.status(404).json({ info: "incorrect username or password" });
 
     // user was found, check password
-    const match = await bcrypt.compare(req.body.password, user.password!);
+    const match = await comparePassword(req.body.password, user?.password!);
 
     // incorrect passowrd
     if (!match)

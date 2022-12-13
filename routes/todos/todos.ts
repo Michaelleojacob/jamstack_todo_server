@@ -9,7 +9,7 @@ const todoRouter = express.Router();
 todoRouter.get("/", verifyToken, async (req: CRequest, res: Response) => {
   try {
     const result = await prisma.todo.findMany({
-      where: { authorId: req?.data?.id },
+      where: { authorId: req?.userData?.id },
     });
     return res.status(200).json({ info: "got user todos", result });
   } catch (e) {
@@ -17,11 +17,12 @@ todoRouter.get("/", verifyToken, async (req: CRequest, res: Response) => {
   }
 });
 
+// create todo
 todoRouter.post("/", verifyToken, async (req: CRequest, res: Response) => {
   try {
     const { title, desc, prio, due, done, projectId } = req.body;
     const user = await prisma.user.findUnique({
-      where: { username: req.data?.username },
+      where: { id: req.userData?.id },
     });
 
     const project =
@@ -47,6 +48,11 @@ todoRouter.post("/", verifyToken, async (req: CRequest, res: Response) => {
   } catch (e) {
     console.log(e);
   }
+});
+
+todoRouter.delete("/delete/:id", async (req: CRequest, res: Response) => {
+  const deleteTodoId = req.params.id;
+  // const;
 });
 
 export default todoRouter;

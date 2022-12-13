@@ -4,7 +4,7 @@ import { CRequest } from "../../types/types";
 const protectedRouter = express.Router();
 
 protectedRouter.get("/", verifyToken, (req: CRequest, res: Response) => {
-  console.log(req.data);
+  // console.log(req.userData);
   return res.status(200).json({ info: "hit protected end point" });
 });
 

@@ -37,3 +37,8 @@ Content-Type: application/json
   "projectId": 1
 
 }
+
+###
+delete http://localhost:3002/todos/delete/:1
+Content-Type: application/application/json
+

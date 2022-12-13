@@ -21,5 +21,15 @@ export interface TokenData {
 
 export interface CRequest extends Request {
   token?: string;
-  data?: TokenData;
+  userData?: TokenData;
+}
+
+export interface Todo {
+  title?: string;
+  desc?: string;
+  prio?: string;
+  due?: number;
+  done?: boolean;
+  creation?: number;
+  project?: string;
 }
