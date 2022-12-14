@@ -31,5 +31,5 @@ export interface Todo {
   due?: number;
   done?: boolean;
   creation?: number;
-  project?: string;
+  projectId?: string;
 }

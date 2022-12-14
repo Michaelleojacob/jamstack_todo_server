@@ -1,6 +1,7 @@
 import prisma from "../../config/db";
 import { findUserById } from "./users";
 import { Todo } from "../../types/types";
+import TodoData from "../factory/todos";
 
 /**
  * will always return an array.
@@ -23,6 +24,12 @@ const getTodos = async (userId: number) => {
   return userExists ? await findTodos(userExists.id) : null;
 };
 
-const createTodo = async (userId: number, data: Todo) => {};
+const createTodo = async (userId: number, todo: TodoData) => {
+  const userExists = await findUserById(userId);
+  if (userExists) {
+    console.log(todo);
+  }
+  // return userExists ? await prisma.todo.create({ data: { data } }) : null;
+};
 
-export { getTodos, createTodo };
+export { findTodos, getTodos, createTodo };

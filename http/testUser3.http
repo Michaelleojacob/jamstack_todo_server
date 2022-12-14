@@ -24,3 +24,15 @@ get http://localhost:3002/signout
 ###
 get http://localhost:3002/todos
 
+###
+post http://localhost:3002/todos
+Content-Type: application/json
+
+{
+  "title": "second todo!",
+  "desc": "testing",
+  "prio": "low",
+  "due": "1670440199113",
+  "done": false,
+  "projectId": 3
+}
