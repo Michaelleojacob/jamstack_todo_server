@@ -32,7 +32,7 @@ Content-Type: application/json
   "title": "second todo!",
   "desc": "testing",
   "prio": "low",
-  "due": "1670440199113",
-  "done": false,
-  "projectId": 3
+  "done": false
 }
+
+delete http://localhost:3002/todo/delete:3

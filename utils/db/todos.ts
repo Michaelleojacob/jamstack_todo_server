@@ -1,6 +1,7 @@
 import prisma from "../../config/db";
 import { findUserById } from "./users";
 import TodoData from "../factory/todos";
+import { Todo } from "../../types/types";
 
 /**
  * will always return an array.
@@ -23,23 +24,28 @@ const getTodos = async (userId: number) => {
   return userExists ? await findTodos(userExists.id) : null;
 };
 
-const createTodo = async (userId: number, todo: TodoData) => {
-  const userExists = await findUserById(userId);
-  if (userExists) {
-    const dbtodo = prisma.todo.create({
-      data: {
-        title: todo.title,
-        desc: todo.desc,
-        prio: todo.prio,
-        due: todo.due,
-        done: todo.done,
-        creation: todo.createdAt,
-        author: { connect: { id: userId } },
-        project: { connect: { id: todo.projectId } },
-      },
-    });
-  }
-  // return userExists ? await prisma.todo.create({ data: { data } }) : null;
-};
+// const createTodo = async (todo: Todo) => {
+//   const { authorId, title, desc, prio, due, done, projectId } = todo;
+//   if (!authorId) return false;
+//   const userExists = await findUserById(authorId);
+//   if (userExists && authorId) {
+//     if (!title) return false;
+//     const dbtodo = await prisma.todo.create({
+//       data: {
+//         title,
+//         desc,
+//         prio,
+//         due,
+//         done,
+//         creation,
+//         author: { connect: { id: authorId } },
+//         authorId,
+//         // project: { connect: { id:} },
+//       },
+//     });
+//     console.log(dbtodo);
+//   }
+//   // return userExists ? await prisma.todo.create({ data: { data } }) : null;
+// };
 
-export { findTodos, getTodos, createTodo };
+export { findTodos, getTodos };

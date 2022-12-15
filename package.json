@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "kill": "sudo kill -9 $(sudo lsof -t -i:3002)",
     "dev": "npx nodemon server.ts",
     "killdb": "npx ts-node killdb.ts"
   },

@@ -25,11 +25,12 @@ export interface CRequest extends Request {
 }
 
 export interface Todo {
-  title?: string;
+  title: string;
   desc?: string;
   prio?: string;
-  due?: number;
+  due?: Date;
+  creation?: Date;
   done?: boolean;
-  creation?: number;
   projectId?: string;
+  authorId?: number;
 }
