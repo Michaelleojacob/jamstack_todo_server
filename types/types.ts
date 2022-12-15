@@ -13,10 +13,10 @@ export interface JwtPayload {
 }
 
 export interface TokenData {
-  id?: number;
-  username?: string;
-  iat?: number;
-  exp?: number;
+  id: number;
+  username: string;
+  iat: number;
+  exp: number;
 }
 
 export interface CRequest extends Request {
@@ -32,5 +32,5 @@ export interface Todo {
   creation?: Date;
   done?: boolean;
   projectId?: string;
-  authorId?: number;
+  authorId: number;
 }

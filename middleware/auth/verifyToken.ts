@@ -1,11 +1,11 @@
 import { Response, NextFunction } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
-import { CRequest } from "../../types/types";
+import { CRequest, TokenData } from "../../types/types";
 
 const verifyToken = (req: CRequest, res: Response, next: NextFunction) => {
   try {
     // get token
-    const { token } = req.signedCookies;
+    const { token }: { token: string } = req.signedCookies;
 
     // if no token
     if (!token) return res.status(403).json({ err: "no token" });
@@ -15,6 +15,7 @@ const verifyToken = (req: CRequest, res: Response, next: NextFunction) => {
      * or
      * verify throws error, and catch happens
      */
+    // const decoded:TokenData = jwt.verify(token, process.env.TOKEN_SECRET!) as JwtPayload;
     const decoded = jwt.verify(token, process.env.TOKEN_SECRET!) as JwtPayload;
 
     /**
@@ -22,10 +23,7 @@ const verifyToken = (req: CRequest, res: Response, next: NextFunction) => {
      * so we can use it in the next() function
      */
 
-    const { iat, exp } = decoded;
-    const { id, username } = decoded.user;
-
-    req.userData = { username, id, iat, exp };
+    req.userData = decoded as TokenData;
 
     next();
   } catch (e) {
