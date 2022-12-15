@@ -21,8 +21,8 @@ model Todo {
   desc      String?
   notes     String?
   prio      String?
-  creation  String
-  due       String?
+  creation  Int
+  due       Int?
   done      Boolean  @default(false)
   authorId  Int
   projectId Int?

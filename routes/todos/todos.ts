@@ -46,7 +46,7 @@ todoRouter.get("/", verifyToken, async (req: CRequest, res: Response) => {
 todoRouter.post("/", verifyToken, async (req: CRequest, res: Response) => {
   if (req.userData) {
     const { title, desc, prio, due, done, projectId } = req.body;
-    const todo = new TodoData(title, desc, prio, due, done);
+    const todo = new TodoData(title, desc, prio, due, done, projectId);
     // console.log(todo);
     const result = await createTodo(Number(req.userData.id), todo);
     console.log(result);

@@ -27,13 +27,15 @@ class TodoData {
     public desc: string | null = null,
     public prio: "low" | "med" | "high" | null = null,
     public done: boolean,
-    public due: number | null = null
+    public due: number | null = null,
+    public projectId: number | null = null
   ) {
     this.desc = desc;
     this.title = title;
     this.prio = prio;
     this.done = done;
     this.due = due;
+    this.projectId = projectId;
   }
 }
 
