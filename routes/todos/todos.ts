@@ -2,7 +2,6 @@ import express, { Response } from "express";
 import verifyToken from "../../middleware/auth/verifyToken";
 import { CRequest, Todo } from "../../types/types";
 import { findTodos, createTodo } from "../../utils/db/todos";
-import { findUserById } from "../../utils/db/users";
 
 const todoRouter = express.Router();
 
@@ -16,12 +15,11 @@ todoRouter.get("/", verifyToken, async (req: CRequest, res: Response) => {
 });
 
 todoRouter.post("/", verifyToken, async (req: CRequest, res: Response) => {
-  if (req.userData) {
-    const { title, desc, prio, due, done, projectId }: Todo = req.body;
-    const user = await findUserById(req.userData.id);
-    if (user) {
+  try {
+    if (req.userData) {
+      const { title, desc, prio, due, done, projectId }: Todo = req.body;
       const todoData = await createTodo({
-        authorId: user.id,
+        authorId: req.userData.id,
         title,
         desc,
         prio,
@@ -31,6 +29,11 @@ todoRouter.post("/", verifyToken, async (req: CRequest, res: Response) => {
       });
       return res.status(201).json({ info: "todo created", todoData });
     }
+  } catch (e) {
+    console.log(`error in todoRouter post`, e);
+    return res
+      .status(400)
+      .json({ info: "something went wrong in todoRouter post" });
   }
 });
 

@@ -1,6 +1,5 @@
 import prisma from "../../config/db";
 import { findUserById } from "./users";
-import TodoData from "../factory/todos";
 import { Todo } from "../../types/types";
 
 /**
@@ -24,22 +23,34 @@ const getTodos = async (userId: number) => {
   return userExists ? await findTodos(userExists.id) : null;
 };
 
+// TODO
+/**
+ * find project
+ * if project was passed in
+ * reference object or leave undefined.
+ */
+
 const createTodo = async (todo: Todo) => {
-  const { authorId, title, desc, prio, due, done, projectId } = todo;
-  const userExists = await findUserById(authorId);
-  if (userExists) {
-    const dbtodo = await prisma.todo.create({
-      data: {
-        title,
-        desc,
-        prio,
-        due,
-        done,
-        author: { connect: { id: authorId } },
-        // project: project === null ? undefined : { connect: { id: project?.id } },
-      },
-    });
-    return dbtodo;
+  try {
+    const { authorId, title, desc, prio, due, done, projectId } = todo;
+    const userExists = await findUserById(authorId);
+    if (userExists) {
+      const dbtodo = await prisma.todo.create({
+        data: {
+          title,
+          desc,
+          prio,
+          due,
+          done,
+          author: { connect: { id: authorId } },
+          // project: project === null ? undefined : { connect: { id: project?.id } },
+        },
+      });
+      return dbtodo;
+    }
+  } catch (e) {
+    console.log(`error in createTodo`, e);
+    return false;
   }
 };
 
