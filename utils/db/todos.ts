@@ -35,6 +35,7 @@ const createTodo = async (userId: number, todo: TodoData) => {
         done: todo.done,
         creation: todo.createdAt,
         author: { connect: { id: userId } },
+        project: { connect: { id: todo.projectId } },
       },
     });
   }
