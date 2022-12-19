@@ -1,5 +1,5 @@
 import express, { Response } from "express";
-import verifyToken from "../../middleware/auth/verifyToken";
+import verifyToken from "../../middleware/verifyToken";
 import { CRequest } from "../../types/types";
 const protectedRouter = express.Router();
 

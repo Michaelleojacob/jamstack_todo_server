@@ -7,12 +7,8 @@ import { Todo } from "../../types/types";
  * - array of objects (all tasks)
  * - empty array
  */
-const findTodos = async (userId: number) =>
-  await prisma.todo.findMany({
-    where: {
-      authorId: userId,
-    },
-  });
+const findTodos = async (authorId: number) =>
+  await prisma.todo.findMany({ where: { authorId } });
 
 /**
  * checking if the user exists first before finding todos
@@ -31,27 +27,25 @@ const getTodos = async (userId: number) => {
  */
 
 const createTodo = async (todo: Todo) => {
-  try {
-    const { authorId, title, desc, prio, due, done, projectId } = todo;
-    const userExists = await findUserById(authorId);
-    if (userExists) {
-      const dbtodo = await prisma.todo.create({
-        data: {
-          title,
-          desc,
-          prio,
-          due,
-          done,
-          author: { connect: { id: authorId } },
-          // project: project === null ? undefined : { connect: { id: project?.id } },
-        },
-      });
-      return dbtodo;
-    }
-  } catch (e) {
-    console.log(`error in createTodo`, e);
-    return null;
+  const { authorId, title, desc, prio, due, done, projectId } = todo;
+  const userExists = await findUserById(authorId);
+  if (userExists) {
+    const dbtodo = await prisma.todo.create({
+      data: {
+        title,
+        desc,
+        prio,
+        due,
+        done,
+        author: { connect: { id: authorId } },
+        // project: project === null ? undefined : { connect: { id: project?.id } },
+      },
+    });
+    return dbtodo;
   }
 };
 
-export { findTodos, getTodos, createTodo };
+const deleteTodo = async (id: number) =>
+  await prisma.todo.delete({ where: { id } });
+
+export { findTodos, getTodos, createTodo, deleteTodo };

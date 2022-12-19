@@ -36,4 +36,4 @@ Content-Type: application/json
 }
 
 ###
-delete http://localhost:3002/todo/delete:3
+delete http://localhost:3002/todos/delete/2

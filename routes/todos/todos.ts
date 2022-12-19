@@ -1,7 +1,7 @@
 import express, { Response } from "express";
-import verifyToken from "../../middleware/auth/verifyToken";
+import verifyToken from "../../middleware/verifyToken";
 import { CRequest, Todo } from "../../types/types";
-import { findTodos, createTodo } from "../../utils/db/todos";
+import { findTodos, createTodo, deleteTodo } from "../../utils/db/todos";
 
 const todoRouter = express.Router();
 
@@ -31,16 +31,27 @@ todoRouter.post("/", verifyToken, async (req: CRequest, res: Response) => {
     }
   } catch (e) {
     console.log(`error in todoRouter post`, e);
-    return res
-      .status(400)
-      .json({ info: "something went wrong in todoRouter post" });
+    return res.status(400).json({ info: "err in todoRouter post" });
   }
 });
 
 // delete todo
-todoRouter.delete("/delete/:id", async (req: CRequest, res: Response) => {
-  // const deleteTodoId = req.params.id;
-  // const;
-});
+todoRouter.delete(
+  "/delete/:id",
+  verifyToken,
+  async (req: CRequest, res: Response) => {
+    try {
+      const id = Number(req.params.id);
+      if (req.userData) {
+        await deleteTodo(id);
+        return res.status(200).json({ info: `deleted todo ${id}` });
+      }
+      throw new Error("no userData in delete todo http request");
+    } catch (e) {
+      console.log(e);
+      return res.status(400).json({ info: `no todo deleted.` });
+    }
+  }
+);
 
 export default todoRouter;
