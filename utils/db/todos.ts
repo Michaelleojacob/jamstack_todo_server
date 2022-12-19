@@ -28,21 +28,18 @@ const getTodos = async (userId: number) => {
 
 const createTodo = async (todo: Todo) => {
   const { authorId, title, desc, prio, due, done, projectId } = todo;
-  const userExists = await findUserById(authorId);
-  if (userExists) {
-    const dbtodo = await prisma.todo.create({
-      data: {
-        title,
-        desc,
-        prio,
-        due,
-        done,
-        author: { connect: { id: authorId } },
-        // project: project === null ? undefined : { connect: { id: project?.id } },
-      },
-    });
-    return dbtodo;
-  }
+  const dbtodo = await prisma.todo.create({
+    data: {
+      title,
+      desc,
+      prio,
+      due,
+      done,
+      author: { connect: { id: authorId } },
+      // project: project === null ? undefined : { connect: { id: project?.id } },
+    },
+  });
+  return dbtodo;
 };
 
 const deleteTodo = async (id: number) =>
