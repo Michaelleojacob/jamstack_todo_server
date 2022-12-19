@@ -34,3 +34,14 @@ export interface Todo {
   projectId?: string;
   authorId: number;
 }
+
+export interface Project {
+  title: string;
+  authorId: number;
+}
+
+export interface UpdateProject {
+  newTitle: string;
+  id: number;
+  authorId: number;
+}

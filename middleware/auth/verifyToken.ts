@@ -28,6 +28,9 @@ const verifyToken = (req: CRequest, res: Response, next: NextFunction) => {
     next();
   } catch (e) {
     console.log(`error in verifyToken`, e);
+    return res
+      .status(400)
+      .json({ success: false, info: "problem in verify token" });
   }
 };
 

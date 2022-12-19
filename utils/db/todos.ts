@@ -50,7 +50,7 @@ const createTodo = async (todo: Todo) => {
     }
   } catch (e) {
     console.log(`error in createTodo`, e);
-    return false;
+    return null;
   }
 };
 
