@@ -1,6 +1,6 @@
 import prisma from "../../config/db";
 import { findUserById } from "./users";
-import { Todo } from "../../types/types";
+import { Todo, UpdateTodo } from "../../types/types";
 
 /**
  * will always return an array.
@@ -26,8 +26,8 @@ const getTodos = async (userId: number) => {
  * reference object or leave undefined.
  */
 
-const createTodo = async (todo: Todo) => {
-  const { authorId, title, desc, prio, due, done, projectId } = todo;
+const createTodo = async (todoData: Todo) => {
+  const { authorId, title, desc, prio, due, done, projectId } = todoData;
   const dbtodo = await prisma.todo.create({
     data: {
       title,
@@ -36,13 +36,29 @@ const createTodo = async (todo: Todo) => {
       due,
       done,
       author: { connect: { id: authorId } },
-      // project: project === null ? undefined : { connect: { id: project?.id } },
+      project: projectId ? undefined : { connect: { id: projectId } },
     },
   });
   return dbtodo;
 };
 
+const updateTodo = async (todoData: UpdateTodo) => {
+  const { id, authorId, title, desc, prio, due, done, projectId } = todoData;
+  const updatedTodo = await prisma.todo.update({
+    where: { id, authorId },
+    data: {
+      title,
+      desc,
+      prio,
+      due,
+      done,
+      project: projectId ? undefined : { connect: { id: projectId } },
+    },
+  });
+  return updatedTodo;
+};
+
 const deleteTodo = async (id: number) =>
   await prisma.todo.delete({ where: { id } });
 
-export { findTodos, getTodos, createTodo, deleteTodo };
+export { findTodos, getTodos, createTodo, updateTodo, deleteTodo };

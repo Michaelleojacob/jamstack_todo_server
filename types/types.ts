@@ -27,12 +27,24 @@ export interface CRequest extends Request {
 export interface Todo {
   title: string;
   desc?: string;
-  prio?: string;
+  prio?: "low" | "medium" | "high";
   due?: Date;
   creation?: Date;
   done?: boolean;
-  projectId?: string;
+  projectId?: number;
   authorId: number;
+}
+
+export interface UpdateTodo {
+  title?: string;
+  desc?: string;
+  prio?: "low" | "medium" | "high";
+  due?: Date;
+  creation?: Date;
+  done?: boolean;
+  projectId?: number;
+  authorId: number;
+  id: number;
 }
 
 export interface Project {

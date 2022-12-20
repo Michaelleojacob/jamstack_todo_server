@@ -15,3 +15,5 @@ const confirmUser = async (
     return;
   }
 };
+
+export default confirmUser;

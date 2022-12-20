@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+   previewFeatures = ["extendedWhereUnique"]
 }
 
 datasource db {
@@ -19,13 +20,13 @@ model Todo {
   id        Int       @id @unique @default(autoincrement())
   title     String
   desc      String?
-  notes     String?
-  createdAt DateTime  @default(now())
   prio      String?
-  due       DateTime?
   done      Boolean   @default(false)
   authorId  Int
   projectId Int?
+  notes     String?
+  createdAt DateTime  @default(now())
+  due       DateTime?
   author    User      @relation(fields: [authorId], references: [id])
   project   Project?  @relation(fields: [projectId], references: [id])
 }

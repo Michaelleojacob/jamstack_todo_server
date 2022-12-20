@@ -1,7 +1,12 @@
 import express, { Response } from "express";
 import verifyToken from "../../middleware/verifyToken";
-import { CRequest, Todo } from "../../types/types";
-import { findTodos, createTodo, deleteTodo } from "../../utils/db/todos";
+import { CRequest, Todo, UpdateTodo } from "../../types/types";
+import {
+  findTodos,
+  createTodo,
+  deleteTodo,
+  updateTodo,
+} from "../../utils/db/todos";
 
 const todoRouter = express.Router();
 
@@ -34,6 +39,35 @@ todoRouter.post("/", verifyToken, async (req: CRequest, res: Response) => {
     return res.status(400).json({ info: "err in todoRouter post" });
   }
 });
+
+// update todo
+todoRouter.put(
+  "/update/:id",
+  verifyToken,
+  async (req: CRequest, res: Response) => {
+    if (req.userData) {
+      const id = Number(req.params.id);
+      const { title, desc, prio, due, done, projectId }: UpdateTodo = req.body;
+      const t = updateTodo({
+        id,
+        authorId: req.userData?.id,
+        title,
+        desc,
+        prio,
+        due,
+        done,
+        projectId,
+      });
+      console.log(t);
+      return res.status(200).json({ info: `${t} updated` });
+    }
+    try {
+    } catch (e) {
+      console.log(e);
+      return res.status(400).json({ info: "err updating todo" });
+    }
+  }
+);
 
 // delete todo
 todoRouter.delete(

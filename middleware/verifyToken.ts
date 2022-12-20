@@ -3,28 +3,33 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import { CRequest, TokenData } from "../types/types";
 
 const verifyToken = (req: CRequest, res: Response, next: NextFunction) => {
-  // get token
-  const { token }: { token: string } = req.signedCookies;
+  try {
+    // get token
+    const { token }: { token: string } = req.signedCookies;
 
-  // if no token
-  if (!token) return res.status(403).json({ err: "no token" });
+    // if no token
+    if (!token) return res.status(403).json({ err: "no token" });
 
-  /**
-   * either verify passes and next() is called
-   * or
-   * verify throws error, and catch happens
-   */
-  // const decoded:TokenData = jwt.verify(token, process.env.TOKEN_SECRET!) as JwtPayload;
-  const decoded = jwt.verify(token, process.env.TOKEN_SECRET!) as JwtPayload;
+    /**
+     * either verify passes and next() is called
+     * or
+     * verify throws error, and catch happens
+     */
+    // const decoded:TokenData = jwt.verify(token, process.env.TOKEN_SECRET!) as JwtPayload;
+    const decoded = jwt.verify(token, process.env.TOKEN_SECRET!) as JwtPayload;
 
-  /**
-   * break down the info from decoded and add it to req
-   * so we can use it in the next() function
-   */
+    /**
+     * break down the info from decoded and add it to req
+     * so we can use it in the next() function
+     */
 
-  req.userData = decoded as TokenData;
+    req.userData = decoded as TokenData;
 
-  next();
+    next();
+  } catch (e) {
+    console.log(e);
+    return res.status(400).json({ info: e });
+  }
 };
 
 export default verifyToken;
