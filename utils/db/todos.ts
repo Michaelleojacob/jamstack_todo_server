@@ -36,7 +36,7 @@ const createTodo = async (todoData: Todo) => {
       due,
       done,
       author: { connect: { id: authorId } },
-      project: projectId ? undefined : { connect: { id: projectId } },
+      project: projectId ? { connect: { id: projectId } } : {},
     },
   });
   return dbtodo;
@@ -52,7 +52,7 @@ const updateTodo = async (todoData: UpdateTodo) => {
       prio,
       due,
       done,
-      project: projectId ? undefined : { connect: { id: projectId } },
+      project: projectId ? { connect: { id: projectId } } : {},
     },
   });
   return updatedTodo;

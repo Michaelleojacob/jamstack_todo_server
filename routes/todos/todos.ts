@@ -45,10 +45,11 @@ todoRouter.put(
   "/update/:id",
   verifyToken,
   async (req: CRequest, res: Response) => {
+    console.log("this ran");
     if (req.userData) {
       const id = Number(req.params.id);
       const { title, desc, prio, due, done, projectId }: UpdateTodo = req.body;
-      const t = updateTodo({
+      const t = await updateTodo({
         id,
         authorId: req.userData?.id,
         title,

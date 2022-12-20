@@ -29,10 +29,21 @@ post http://localhost:3002/todos
 Content-Type: application/json
 
 {
-  "title": "second todo!",
-  "desc": "testing",
+  "title": "third todo!",
+  "desc": "lol",
   "prio": "low",
   "done": false
+}
+
+###
+put http://localhost:3002/todos/update/5
+Content-Type: application/json
+
+{
+  "title": "second todo!",
+  "desc": "lol",
+  "prio": "high",
+  "done": true
 }
 
 ###
