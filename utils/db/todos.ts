@@ -45,7 +45,8 @@ const createTodo = async (todoData: Todo) => {
 const updateTodo = async (todoData: UpdateTodo) => {
   const { id, authorId, title, desc, prio, due, done, projectId } = todoData;
   const updatedTodo = await prisma.todo.update({
-    where: { id, authorId },
+    //     where: { id, authorId },
+    where: { id, author: { id: authorId } },
     data: {
       title,
       desc,

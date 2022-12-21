@@ -1,0 +1,94 @@
+
+// sign up
+post http://localhost:3002/signup
+Content-Type: application/json
+
+{
+  "username": "c",
+  "password": "c"
+}
+
+###
+
+// sign in
+post http://localhost:3002/signin
+Content-Type: application/json
+
+{
+  "username":"c",
+  "password":"c"
+}
+
+###
+
+// check protected
+get http://localhost:3002/protected
+
+###
+
+// sign out
+get http://localhost:3002/signout
+
+###
+
+// get todos
+get http://localhost:3002/todos
+
+###
+
+// create todo
+post http://localhost:3002/todos
+Content-Type: application/json
+
+{
+  "title": "etchasketch",
+  "desc": "proj 3 - the odin project",
+  "prio": "high",
+  "done": false,
+  "projectId": 6
+}
+
+###
+
+// update todo
+put http://localhost:3002/todos/update/5
+Content-Type: application/json
+
+{
+  "title": "second todo!",
+  "desc": "lol",
+  "prio": "high",
+  "done": true
+}
+
+
+###
+
+// delete todo
+delete http://localhost:3002/todos/delete/2
+
+###
+
+// get projects
+get http://localhost:3002/projects
+
+
+###
+
+// create project
+post http://localhost:3002/projects
+Content-Type: application/json
+
+{
+  "title":"my second project"
+}
+
+###
+
+// update project
+put http://localhost:3002/projects/update/6
+Content-Type: application/json
+
+{
+  "newTitle": "odin project"
+}

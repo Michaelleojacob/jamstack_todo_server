@@ -30,6 +30,7 @@ todoRouter.post("/", verifyToken, async (req: CRequest, res: Response) => {
         prio,
         due,
         done,
+        projectId,
         // project: project === null ? undefined : { connect: { id: project?.id } },
       });
       return res.status(201).json({ info: "todo created", todoData });
