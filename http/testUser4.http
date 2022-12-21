@@ -51,14 +51,15 @@ Content-Type: application/json
 ###
 
 // update todo
-put http://localhost:3002/todos/update/5
+put http://localhost:3002/todos/update/11242
 Content-Type: application/json
 
 {
-  "title": "second todo!",
+  "title": "runescape",
   "desc": "lol",
-  "prio": "high",
-  "done": true
+  "prio": "medium",
+  "done": true,
+  "project": 7
 }
 
 
@@ -86,9 +87,24 @@ Content-Type: application/json
 ###
 
 // update project
-put http://localhost:3002/projects/update/6
+put http://localhost:3002/projects/update/7
 Content-Type: application/json
 
 {
   "newTitle": "odin project"
 }
+
+###
+
+// get project with tasks
+get http://localhost:3002/projects/6
+
+###
+
+delete http://localhost:3002/projects/1
+
+
+###
+
+// delete all tasks linked to a project and the project
+delete http://localhost:3002/projects/all/6

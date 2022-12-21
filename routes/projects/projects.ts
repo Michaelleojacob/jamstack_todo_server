@@ -3,7 +3,12 @@ import verifyToken from "../../middleware/verifyToken";
 import { CRequest } from "../../types/types";
 import {
   createProject,
+  deleteProjectAndDeleteAssociatedTasks,
+  deleteProjectById,
+  findCorrespondingTodos,
+  findProjectById,
   getProjects,
+  projectBelongsToUser,
   updateProject,
 } from "../../utils/db/projects";
 const projectRouter = express.Router();
@@ -24,8 +29,10 @@ projectRouter.get("/", verifyToken, async (req: CRequest, res: Response) => {
 projectRouter.get("/:id", verifyToken, async (req: CRequest, res: Response) => {
   try {
     if (req.userData) {
-      const projects = await getProjects(req.userData.id);
-      return res.status(200).json({ info: "got projects", projects });
+      const id = Number(req.params.id);
+      const projects = await findCorrespondingTodos(id);
+      console.log(projects);
+      return res.status(200).json({ info: "got project", projects });
     }
   } catch (e) {
     return res.status(400).json({ info: "err getting all projects" });
@@ -71,26 +78,41 @@ projectRouter.put(
 
 // delete project + keep all associated todos
 projectRouter.delete(
-  "/delete",
+  "/:id",
   verifyToken,
   async (req: CRequest, res: Response) => {
     try {
-      return res.status(200).json({ info: "" });
+      if (!req.userData) throw Error("no user");
+      const id = Number(req.params.id);
+      const result = await projectBelongsToUser(id, req.userData.id);
+      if (!result) throw Error("no project found");
+      deleteProjectById(Number(req.params.id));
+      return res.status(200).json({ info: "deleted project successfully" });
     } catch (e) {
-      return res.status(400).json({ info: "" });
+      console.log(e);
+      return res.status(400).json({ info: "err deleting based on id", e });
     }
   }
 );
 
 // delete project + remove all associated todos
 projectRouter.delete(
-  "/delete/all",
+  "/all/:id",
   verifyToken,
   async (req: CRequest, res: Response) => {
     try {
-      return res.status(200).json({ info: "" });
+      if (!req.userData) throw Error("no user");
+      const id = Number(req.params.id);
+      const checkProject = await findProjectById(id);
+      if (!checkProject) throw Error("no proj found");
+      await deleteProjectAndDeleteAssociatedTasks(id, req.userData.id);
+      return res
+        .status(200)
+        .json({ info: "deleted project and all associated todos" });
     } catch (e) {
-      return res.status(400).json({ info: "" });
+      return res
+        .status(400)
+        .json({ info: "couldn't delete project and linked todos" });
     }
   }
 );
