@@ -19,12 +19,8 @@ const getTodos = async (userId: number) => {
   return userExists ? await findTodos(userExists.id) : null;
 };
 
-// TODO
-/**
- * find project
- * if project was passed in
- * reference object or leave undefined.
- */
+const getProjectTodos = async (projectId: number) =>
+  prisma.todo.findMany({ where: { projectId } });
 
 const createTodo = async (todoData: Todo) => {
   const { authorId, title, desc, prio, due, done, projectId } = todoData;
@@ -45,8 +41,8 @@ const createTodo = async (todoData: Todo) => {
 const updateTodo = async (todoData: UpdateTodo) => {
   const { id, authorId, title, desc, prio, due, done, projectId } = todoData;
   const updatedTodo = await prisma.todo.update({
-    //     where: { id, authorId },
-    where: { id, author: { id: authorId } },
+    // where: { id, author: { id: authorId } },
+    where: { id, authorId },
     data: {
       title,
       desc,
@@ -62,4 +58,11 @@ const updateTodo = async (todoData: UpdateTodo) => {
 const deleteTodo = async (id: number) =>
   await prisma.todo.delete({ where: { id } });
 
-export { findTodos, getTodos, createTodo, updateTodo, deleteTodo };
+export {
+  findTodos,
+  getTodos,
+  getProjectTodos,
+  createTodo,
+  updateTodo,
+  deleteTodo,
+};
