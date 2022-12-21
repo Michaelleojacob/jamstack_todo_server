@@ -20,6 +20,18 @@ projectRouter.get("/", verifyToken, async (req: CRequest, res: Response) => {
   }
 });
 
+// get specific project and all corresponding todos
+projectRouter.get("/:id", verifyToken, async (req: CRequest, res: Response) => {
+  try {
+    if (req.userData) {
+      const projects = await getProjects(req.userData.id);
+      return res.status(200).json({ info: "got projects", projects });
+    }
+  } catch (e) {
+    return res.status(400).json({ info: "err getting all projects" });
+  }
+});
+
 // create project
 projectRouter.post("/", verifyToken, async (req: CRequest, res: Response) => {
   try {
