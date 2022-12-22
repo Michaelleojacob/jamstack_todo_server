@@ -17,7 +17,9 @@ const getProjects = async (authorId: number) =>
   await prisma.project.findMany({ where: { authorId } });
 
 const createProject = async ({ title, authorId }: Project) =>
-  await prisma.project.create({ data: { title, authorId } });
+  await prisma.project.create({
+    data: { title, author: { connect: { id: authorId } } },
+  });
 
 const updateProject = async ({ newTitle, id, authorId }: UpdateProject) =>
   await prisma.project.updateMany({

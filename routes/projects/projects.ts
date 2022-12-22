@@ -82,11 +82,12 @@ projectRouter.delete(
   verifyToken,
   async (req: CRequest, res: Response) => {
     try {
+      // checks for the user passing middleware
       if (!req.userData) throw Error("no user");
-      const id = Number(req.params.id);
-      const result = await projectBelongsToUser(id, req.userData.id);
+      const projId = Number(req.params.id);
+      const result = await projectBelongsToUser(projId, req.userData.id);
       if (!result) throw Error("no project found");
-      deleteProjectById(Number(req.params.id));
+      await deleteProjectById(Number(projId));
       return res.status(200).json({ info: "deleted project successfully" });
     } catch (e) {
       console.log(e);
