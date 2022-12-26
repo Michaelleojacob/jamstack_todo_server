@@ -1,5 +1,5 @@
 import prisma from "../config/db";
-import { createProject } from "../utils/db/projects";
+import { createProject } from "../db/projects";
 
 const logger = async () => {
   await createProject({ title: "lol", authorId: 14 });
@@ -21,11 +21,26 @@ const logger = async () => {
 
 // prisma.project.delete({ where: { id: 8 } }).then((res) => console.log(res));
 
+// prisma.todo
+//   .update({
+//     where: { id: 8 },
+//     data: { project: { connect: { id: 10 } } },
+//   })
+//   .then((res) => console.log(res));
+
+// prisma.todo.findUnique({ where: { id: 8 } }).then((res) => console.log(res));
+
 const checkNestedProjects = async (userId: number, projectId: number) => {
-  return await prisma.user.findMany({
+  const data = await prisma.user.findMany({
     where: { id: userId },
-    include: { projects: true },
+    select: { projects: { where: { id: projectId }, select: { todos: true } } },
   });
+  if (!data[0].projects[0]) return false;
+  if (!data[0].projects.length) return false;
+  return data[0].projects[0].todos;
 };
 
 checkNestedProjects(14, 10).then((res) => console.log(res));
+// checkNestedProjects(14, 11).then((res) => console.log(res));
+// checkNestedProjects(14, 11).then((res) => console.log(res));
+// checkNestedProjects(14, 11).then((res) => console.log(res));
