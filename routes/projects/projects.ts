@@ -3,14 +3,14 @@ import verifyToken from "../../middleware/verifyToken";
 import { CRequest } from "../../types/types";
 import {
   createProject,
+  getProjects,
+  updateProject,
   deleteProjectAndDeleteAssociatedTasks,
   deleteProjectById,
-  findCorrespondingTodos,
-  findProjectById,
-  getProjects,
   projectBelongsToUser,
-  updateProject,
+  findProjectById,
 } from "../../utils/db/projects";
+import { findCorrespondingTodos } from "../../utils/db/projects";
 const projectRouter = express.Router();
 
 // get all projects for the user
