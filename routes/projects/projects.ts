@@ -9,8 +9,8 @@ import {
   deleteProjectById,
   projectBelongsToUser,
   findProjectById,
-} from "../../utils/db/projects";
-import { findCorrespondingTodos } from "../../utils/db/projects";
+} from "../../db/projects";
+import { findCorrespondingTodos } from "../../db/projects";
 const projectRouter = express.Router();
 
 // get all projects for the user

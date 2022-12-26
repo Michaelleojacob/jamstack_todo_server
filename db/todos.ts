@@ -1,6 +1,6 @@
-import prisma from "../../config/db";
+import prisma from "../config/db";
 import { findUserById } from "./users";
-import { Todo, UpdateTodo } from "../../types/types";
+import { Todo, UpdateTodo } from "../types/types";
 
 /**
  * will always return an array.

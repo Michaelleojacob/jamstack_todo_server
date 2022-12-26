@@ -3,7 +3,7 @@ import { Response } from "express";
 import validateSignIn from "../../validations/signin";
 import { CRequest, User } from "../../types/types";
 import createToken from "../../utils/auth/createToken";
-import { findUserByUserName } from "../../utils/db/users";
+import { findUserByUserName } from "../../db/users";
 import { comparePassword } from "../../utils/auth/bcrypt";
 
 const signinRouter = express.Router();

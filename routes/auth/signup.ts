@@ -2,7 +2,7 @@ import express from "express";
 import { Request, Response } from "express";
 import { hashPassword } from "../../utils/auth/bcrypt";
 import validateSignUp from "../../validations/signup";
-import { createUser, isNameAvailable } from "../../utils/db/users";
+import { createUser, isNameAvailable } from "../../db/users";
 
 const signupRouter = express.Router();
 

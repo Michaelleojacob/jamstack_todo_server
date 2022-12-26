@@ -1,4 +1,4 @@
-import prisma from "../../config/db";
+import prisma from "../config/db";
 
 // either returns a user or null
 const findUserById = async (userId: number) =>

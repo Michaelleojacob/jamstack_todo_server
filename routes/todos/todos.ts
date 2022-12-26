@@ -1,12 +1,7 @@
 import express, { Response } from "express";
 import verifyToken from "../../middleware/verifyToken";
 import { CRequest, Todo, UpdateTodo } from "../../types/types";
-import {
-  findTodos,
-  createTodo,
-  deleteTodo,
-  updateTodo,
-} from "../../utils/db/todos";
+import { findTodos, createTodo, deleteTodo, updateTodo } from "../../db/todos";
 
 const todoRouter = express.Router();
 

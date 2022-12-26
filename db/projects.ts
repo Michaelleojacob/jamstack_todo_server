@@ -1,5 +1,5 @@
-import prisma from "../../config/db";
-import { Project, UpdateProject } from "../../types/types";
+import prisma from "../config/db";
+import { Project, UpdateProject } from "../types/types";
 
 const findProjectById = async (id: number) =>
   await prisma.project.findUnique({ where: { id } });
