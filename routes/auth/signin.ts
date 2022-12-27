@@ -45,7 +45,7 @@ signinRouter.post("/", validateSignIn, async (req: CRequest, res: Response) => {
     });
     return res.status(200).json({ info: "+logged in. +token created", token });
   } catch (e) {
-    console.log(`error in signin post`, e);
+    console.log(e, `error in signin post`);
     return null;
   }
 });
