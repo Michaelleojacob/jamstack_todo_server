@@ -5,7 +5,7 @@ const findUsers = async () =>
   await prisma.user.findMany({ select: { id: true, username: true } });
 // findUsers().then((res) => console.log(res));
 
-// returns user: {}, or null
+// returns user: {}, or false
 const findUser = async (id: number) =>
   await prisma.user.findUnique({
     where: { id },
@@ -18,14 +18,14 @@ const userExists = async (id: number) =>
   !!(await prisma.user.findUnique({ where: { id } }));
 // userExists(15).then((res) => console.log(res));
 
-// return user info or null
+// return user info or false
 const createUser = async (username: string, password: string) => {
   try {
     const user = await prisma.user.create({ data: { username, password } });
     return { username: user.username, id: user.id };
   } catch (e) {
     console.log(`err in createUser`, e);
-    return null;
+    return false;
   }
 };
 // createUser("123", "lol").then((res) => console.log(res));

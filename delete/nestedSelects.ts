@@ -40,7 +40,7 @@ const checkNestedProjects = async (userId: number, projectId: number) => {
   return data[0].projects[0].todos;
 };
 
-checkNestedProjects(14, 10).then((res) => console.log(res));
+// checkNestedProjects(14, 10).then((res) => console.log(res));
 // checkNestedProjects(14, 11).then((res) => console.log(res));
 // checkNestedProjects(14, 11).then((res) => console.log(res));
 // checkNestedProjects(14, 11).then((res) => console.log(res));
