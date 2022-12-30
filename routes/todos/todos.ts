@@ -9,9 +9,9 @@ const todoRouter = express.Router();
 todoRouter.get("/", verifyToken, async (req: CRequest, res: Response) => {
   if (req.userData) {
     const todos = await findTodos(Number(req.userData.id));
-    return res.status(400).json({ info: "got todos", todos });
+    return res.status(400).json({ msg: "got todos", todos });
   }
-  return res.status(400).json({ info: "error in todo router get /" });
+  return res.status(400).json({ msg: "error in todo router get /" });
 });
 
 todoRouter.post("/", verifyToken, async (req: CRequest, res: Response) => {
@@ -28,11 +28,11 @@ todoRouter.post("/", verifyToken, async (req: CRequest, res: Response) => {
         projectId,
         // project: project === null ? undefined : { connect: { id: project?.id } },
       });
-      return res.status(201).json({ info: "todo created", todoData });
+      return res.status(201).json({ msg: "todo created", todoData });
     }
   } catch (e) {
     console.log(`error in todoRouter post`, e);
-    return res.status(400).json({ info: "err in todoRouter post" });
+    return res.status(400).json({ msg: "err in todoRouter post" });
   }
 });
 
@@ -56,12 +56,12 @@ todoRouter.put(
         projectId,
       });
       console.log(t);
-      return res.status(200).json({ info: `${t} updated` });
+      return res.status(200).json({ msg: `${t} updated` });
     }
     try {
     } catch (e) {
       console.log(e);
-      return res.status(400).json({ info: "err updating todo" });
+      return res.status(400).json({ msg: "err updating todo" });
     }
   }
 );
@@ -75,12 +75,12 @@ todoRouter.delete(
       const id = Number(req.params.id);
       if (req.userData) {
         await deleteTodo(id);
-        return res.status(200).json({ info: `deleted todo ${id}` });
+        return res.status(200).json({ msg: `deleted todo ${id}` });
       }
       throw new Error("no userData in delete todo http request");
     } catch (e) {
       console.log(e);
-      return res.status(400).json({ info: `no todo deleted.` });
+      return res.status(400).json({ msg: `no todo deleted.` });
     }
   }
 );

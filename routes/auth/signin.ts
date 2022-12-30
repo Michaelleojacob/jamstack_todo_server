@@ -19,14 +19,14 @@ signinRouter.post("/", validateSignIn, async (req: CRequest, res: Response) => {
 
     // no user found
     if (!user)
-      return res.status(404).json({ info: "incorrect username or password" });
+      return res.status(404).json({ msg: "incorrect username or password" });
 
     // user was found, check password
     const match = await comparePassword(req.body.password, user?.password!);
 
     // incorrect passowrd
     if (!match)
-      return res.status(403).json({ info: " incorrect username or password" });
+      return res.status(403).json({ msg: " incorrect username or password" });
 
     /**
      * correct username and password
@@ -43,7 +43,7 @@ signinRouter.post("/", validateSignIn, async (req: CRequest, res: Response) => {
     res.cookie("token", token, {
       signed: true,
     });
-    return res.status(200).json({ info: "+logged in. +token created", token });
+    return res.status(200).json({ msg: "+logged in. +token created", token });
   } catch (e) {
     console.log(e, `error in signin post`);
     return null;

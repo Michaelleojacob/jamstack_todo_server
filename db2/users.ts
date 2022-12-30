@@ -18,7 +18,7 @@ const userExists = async (id: number) =>
   !!(await prisma.user.findUnique({ where: { id } }));
 // userExists(15).then((res) => console.log(res));
 
-// return user info or false
+// return user msg or false
 const createUser = async (username: string, password: string) => {
   try {
     const user = await prisma.user.create({ data: { username, password } });

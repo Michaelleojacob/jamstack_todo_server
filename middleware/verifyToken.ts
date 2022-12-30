@@ -19,7 +19,7 @@ const verifyToken = (req: CRequest, res: Response, next: NextFunction) => {
     const decoded = jwt.verify(token, process.env.TOKEN_SECRET!) as JwtPayload;
 
     /**
-     * break down the info from decoded and add it to req
+     * break down the msg from decoded and add it to req
      * so we can use it in the next() function
      */
 
@@ -28,7 +28,7 @@ const verifyToken = (req: CRequest, res: Response, next: NextFunction) => {
     next();
   } catch (e) {
     console.log(e, "err in verifyToken");
-    return res.status(400).json({ info: e });
+    return res.status(400).json({ msg: e });
   }
 };
 

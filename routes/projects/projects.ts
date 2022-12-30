@@ -18,10 +18,10 @@ projectRouter.get("/", verifyToken, async (req: CRequest, res: Response) => {
   try {
     if (req.userData) {
       const projects = await getProjects(req.userData.id);
-      return res.status(200).json({ info: "got projects", projects });
+      return res.status(200).json({ msg: "got projects", projects });
     }
   } catch (e) {
-    return res.status(400).json({ info: "err getting all projects" });
+    return res.status(400).json({ msg: "err getting all projects" });
   }
 });
 
@@ -32,10 +32,10 @@ projectRouter.get("/:id", verifyToken, async (req: CRequest, res: Response) => {
       const id = Number(req.params.id);
       const projects = await findCorrespondingTodos(id);
       console.log(projects);
-      return res.status(200).json({ info: "got project", projects });
+      return res.status(200).json({ msg: "got project", projects });
     }
   } catch (e) {
-    return res.status(400).json({ info: "err getting all projects" });
+    return res.status(400).json({ msg: "err getting all projects" });
   }
 });
 
@@ -45,11 +45,11 @@ projectRouter.post("/", verifyToken, async (req: CRequest, res: Response) => {
     if (req.userData) {
       const { title } = req.body;
       const newProj = await createProject({ title, authorId: req.userData.id });
-      return res.status(200).json({ info: "proj created", newProj });
+      return res.status(200).json({ msg: "proj created", newProj });
     }
   } catch (e) {
     console.log(e);
-    return res.status(400).json({ info: "err creating proj", e });
+    return res.status(400).json({ msg: "err creating proj", e });
   }
 });
 
@@ -68,10 +68,10 @@ projectRouter.put(
           authorId: req.userData.id,
         });
 
-        return res.status(200).json({ info: "updated project", updatedProj });
+        return res.status(200).json({ msg: "updated project", updatedProj });
       }
     } catch (e) {
-      return res.status(400).json({ info: "err in updateProject", e });
+      return res.status(400).json({ msg: "err in updateProject", e });
     }
   }
 );
@@ -88,10 +88,10 @@ projectRouter.delete(
       const result = await projectBelongsToUser(projId, req.userData.id);
       if (!result) throw Error("no project found");
       await deleteProjectById(Number(projId));
-      return res.status(200).json({ info: "deleted project successfully" });
+      return res.status(200).json({ msg: "deleted project successfully" });
     } catch (e) {
       console.log(e);
-      return res.status(400).json({ info: "err deleting based on id", e });
+      return res.status(400).json({ msg: "err deleting based on id", e });
     }
   }
 );
@@ -109,11 +109,11 @@ projectRouter.delete(
       await deleteProjectAndDeleteAssociatedTasks(id, req.userData.id);
       return res
         .status(200)
-        .json({ info: "deleted project and all associated todos" });
+        .json({ msg: "deleted project and all associated todos" });
     } catch (e) {
       return res
         .status(400)
-        .json({ info: "couldn't delete project and linked todos" });
+        .json({ msg: "couldn't delete project and linked todos" });
     }
   }
 );

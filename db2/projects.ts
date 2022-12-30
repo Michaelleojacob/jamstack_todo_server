@@ -53,7 +53,7 @@ const findProjectById = async (userId: number, projId: number) => {
 // findProjectById(200, 11).then((res) => console.log(res));
 // findProjectById(15, 200).then((res) => console.log(res));
 
-const createProjectx = async (userId: number, title: string) => {
+const createProject = async (userId: number, title: string) => {
   try {
     return await prisma.project.create({
       data: { title, author: { connect: { id: userId } } },
@@ -63,13 +63,14 @@ const createProjectx = async (userId: number, title: string) => {
     return false;
   }
 };
+// createProject(15, "lol").then((res) => console.log(res));
 
 /**
  * this will return the user
  * NOT the newly created project.
  * requires a second query, or to just create via prisma.project.create
  */
-const createProject = async (userId: number, title: string) => {
+const createProjectX = async (userId: number, title: string) => {
   try {
     const data = await prisma.user.update({
       where: { id: userId },

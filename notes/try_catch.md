@@ -24,12 +24,12 @@ todoRouter.delete(
       const id = Number(req.params.id);
       if (req.userData) {
         await deleteTodo(id);
-        return res.status(200).json({ info: `deleted todo ${id}` });
+        return res.status(200).json({ msg: `deleted todo ${id}` });
       }
       throw new Error("no userData in delete todo http request");
     } catch (e) {
       console.log(e);
-      return res.status(400).json({ info: `no todo deleted.` });
+      return res.status(400).json({ msg: `no todo deleted.` });
     }
   }
 );
