@@ -1,6 +1,6 @@
 
 // sign up
-post http://localhost:3002/signup
+post http://localhost:3002/auth/signup
 Content-Type: application/json
 
 {
@@ -11,10 +11,15 @@ Content-Type: application/json
 ###
 
 // sign in
-post http://localhost:3002/signin
+post http://localhost:3002/auth/signin
 Content-Type: application/json
 
 {
   "username":"c",
   "password":"c"
 }
+
+###
+
+// check protected
+get http://localhost:3002/protected

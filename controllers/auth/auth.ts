@@ -54,12 +54,25 @@ const log_in = async (req: CRequest, res: Response) => {
 
 const sign_up = async (req: Request, res: Response) => {
   try {
+    // extract relevant info from body
     const { username, password } = req.body;
+
+    // check if name is taken
     const checkName = await isNameAvailable(username);
+
+    // if it is taken - throw error
     if (checkName) throw Error("name taken");
+
+    // hash the password from the body
     const hash = await hashPassword(password);
+
+    // create the user in postgres using the hash.
     const user = await createUser(username, hash);
+
+    // if something went wrong trying to create the user
     if (!user) throw Error("err creating user");
+
+    // user created successfully.
     return res.status(201).json({ msg: `user ${user.username} created` });
   } catch (e) {
     console.log(e, "err in /signupRouter");
