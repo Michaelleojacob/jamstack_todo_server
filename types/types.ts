@@ -2,7 +2,12 @@ import { Request } from "express";
 
 export interface User {
   username: string;
-  password?: string;
+  password: string;
+  id: number;
+}
+
+export interface UserInfo {
+  username: string;
   id: number;
 }
 
