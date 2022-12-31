@@ -14,6 +14,13 @@ const findUser = async (id: number) =>
 // findUser(15).then((res) => console.log(res));
 // findUser(200).then((res) => console.log(res));
 
+// by name for log_in. No id/token yet. Needs the password.
+const findUserByName = async (username: string) =>
+  await prisma.user.findUnique({ where: { username } });
+
+const isNameAvailable = async (username: string) =>
+  !!(await prisma.user.findUnique({ where: { username } }));
+
 const userExists = async (id: number) =>
   !!(await prisma.user.findUnique({ where: { id } }));
 // userExists(15).then((res) => console.log(res));
@@ -30,4 +37,11 @@ const createUser = async (username: string, password: string) => {
 };
 // createUser("123", "lol").then((res) => console.log(res));
 
-export { findUsers, findUser, userExists, createUser };
+export {
+  findUsers,
+  findUser,
+  userExists,
+  createUser,
+  findUserByName,
+  isNameAvailable,
+};

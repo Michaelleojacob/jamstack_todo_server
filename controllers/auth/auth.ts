@@ -1,8 +1,18 @@
 import { CRequest, User, UserInfo } from "../../types/types";
-import { Response } from "express";
-import { findUserByUserName } from "../../db/users";
-import { comparePassword } from "../../utils/auth/bcrypt";
+import { Request, Response } from "express";
+import { findUserByName, isNameAvailable, createUser } from "../../db/users";
+import { comparePassword, hashPassword } from "../../utils/auth/bcrypt";
 import createToken from "../../utils/auth/createToken";
+
+const log_out = async (req: CRequest, res: Response) => {
+  try {
+    res.clearCookie("token");
+    return res.status(200).json({ msg: "logged out successfully" });
+  } catch (e) {
+    console.log(e, "err in log_out");
+    return res.status(400).json({ msg: "err in log_out" });
+  }
+};
 
 const log_in = async (req: CRequest, res: Response) => {
   try {
@@ -10,7 +20,7 @@ const log_in = async (req: CRequest, res: Response) => {
     if (req.token) res.clearCookie("token");
 
     // check to make sure user exists
-    const user: User | null = await findUserByUserName(req.body.username);
+    const user: User | null = await findUserByName(req.body.username);
 
     // if no user was found
     if (!user) return res.status(400).json({ msg: "no user found" });
@@ -35,11 +45,26 @@ const log_in = async (req: CRequest, res: Response) => {
     res.cookie("token", token, { signed: true });
 
     // remove token from this once done testing
-    return res.status(200).json({ msg: "logged in. token created", token });
+    return res.status(200).json({ msg: "logged in and token created", token });
   } catch (e) {
     console.log(e, `error in signin post`);
-    return null;
+    return res.status(400).json({ msg: "err logging in" });
   }
 };
 
-export { log_in };
+const sign_up = async (req: Request, res: Response) => {
+  try {
+    const { username, password } = req.body;
+    const checkName = await isNameAvailable(username);
+    if (checkName) throw Error("name taken");
+    const hash = await hashPassword(password);
+    const user = await createUser(username, hash);
+    if (!user) throw Error("err creating user");
+    return res.status(201).json({ msg: `user ${user.username} created` });
+  } catch (e) {
+    console.log(e, "err in /signupRouter");
+    res.status(400).json({ msg: "err in sign up" });
+  }
+};
+
+export { log_in, log_out, sign_up };
