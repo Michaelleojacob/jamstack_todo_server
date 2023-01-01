@@ -1,6 +1,5 @@
 import { check, validationResult } from "express-validator";
 import { Request, Response, NextFunction } from "express";
-import prisma from "../../config/db";
 
 const validateSignUp = [
   check("username")
@@ -8,16 +7,6 @@ const validateSignUp = [
     .escape()
     .notEmpty()
     .withMessage("invalid username")
-    .bail()
-    .custom(async (val) => {
-      const isNameTaken = await prisma.user.findFirst({
-        where: {
-          username: val,
-        },
-      });
-      if (isNameTaken !== null)
-        return Promise.reject("username already in use");
-    })
     .bail(),
   check("password")
     .trim()
@@ -43,15 +32,6 @@ const validateSignIn = [
     .escape()
     .notEmpty()
     .withMessage("invalid username")
-    // .bail()
-    // .custom(async (val) => {
-    //   const findUser = await prisma.user.findFirst({
-    //     where: {
-    //       username: val,
-    //     },
-    //   });
-    //   if (findUser === null) return Promise.reject("no user found");
-    // })
     .bail(),
   check("password")
     .trim()
