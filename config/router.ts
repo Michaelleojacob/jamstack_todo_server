@@ -7,8 +7,8 @@ import projectRouter from "../routes/projects/projects";
 const routerConfig = (app: Application) => {
   app.use("/auth", authRouter);
   app.use("/protected", protectedRouter);
-  // app.use("/todos", todoRouter);
   // app.use("/projects", projectRouter);
+  // app.use("/todos", todoRouter);
 };
 
 export default routerConfig;

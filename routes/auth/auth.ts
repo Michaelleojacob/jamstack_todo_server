@@ -1,12 +1,14 @@
 import express from "express";
 import { log_in, log_out, sign_up } from "../../controllers/auth/auth";
+import validateSignIn from "../../validations/signin";
+import validateSignUp from "../../validations/signup";
 
 const authRouter = express.Router();
 
-authRouter.post("/signin", log_in);
-
 authRouter.get("/signout", log_out);
 
-authRouter.post("/signup", sign_up);
+authRouter.post("/signin", validateSignIn, log_in);
+
+authRouter.post("/signup", validateSignUp, sign_up);
 
 export default authRouter;
