@@ -23,3 +23,7 @@ Content-Type: application/json
 
 // check protected
 get http://localhost:3002/protected
+
+
+###
+get http://localhost:3002/auth/signout

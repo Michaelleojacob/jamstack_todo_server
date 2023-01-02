@@ -5,7 +5,7 @@ const findUsers = async () =>
   await prisma.user.findMany({ select: { id: true, username: true } });
 // findUsers().then((res) => console.log(res));
 
-// returns user: {}, or false
+// returns user: {id, username}, or false
 const findUser = async (id: number) =>
   await prisma.user.findUnique({
     where: { id },
@@ -14,7 +14,7 @@ const findUser = async (id: number) =>
 // findUser(15).then((res) => console.log(res));
 // findUser(200).then((res) => console.log(res));
 
-// by name for log_in. No id/token yet. Needs the password.
+// by name for sign up. No id/token yet. Needs the password.
 const findUserByName = async (username: string) =>
   await prisma.user.findUnique({ where: { username } });
 
