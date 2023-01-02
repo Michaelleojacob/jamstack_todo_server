@@ -4,7 +4,7 @@ import { findUserByName, isNameAvailable, createUser } from "../../db/users";
 import { comparePassword, hashPassword } from "../../utils/auth/bcrypt";
 import createToken from "../../utils/auth/createToken";
 
-const log_out = async (req: CRequest, res: Response) => {
+export const log_out = async (req: CRequest, res: Response) => {
   try {
     res.clearCookie("token");
     return res.status(200).json({ msg: "logged out successfully" });
@@ -14,7 +14,7 @@ const log_out = async (req: CRequest, res: Response) => {
   }
 };
 
-const log_in = async (req: CRequest, res: Response) => {
+export const log_in = async (req: CRequest, res: Response) => {
   try {
     // if sender has a token, clear the token.
     if (req.token) res.clearCookie("token");
@@ -52,7 +52,7 @@ const log_in = async (req: CRequest, res: Response) => {
   }
 };
 
-const sign_up = async (req: Request, res: Response) => {
+export const sign_up = async (req: Request, res: Response) => {
   try {
     // extract relevant info from body
     const { username, password } = req.body;
@@ -79,5 +79,3 @@ const sign_up = async (req: Request, res: Response) => {
     res.status(400).json({ msg: "err in sign up" });
   }
 };
-
-export { log_in, log_out, sign_up };

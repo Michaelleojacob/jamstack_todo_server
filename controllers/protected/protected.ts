@@ -12,4 +12,5 @@ const protectedEndPoint = async (req: CRequest, res: Response) => {
     return res.status(400).json({ msg: "err getting protected end point" });
   }
 };
+
 export default protectedEndPoint;
