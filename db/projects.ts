@@ -1,10 +1,60 @@
 import prisma from "../config/db";
+import { ProjectAuthorId, UpdateprojectByProjectId } from "../types/types";
 
-export const getProjectAuthorId = async (id: number) =>
+// get author id for that project
+export const getProjectAuthorId = async (projectId: number) =>
   await prisma.project.findUnique({
-    where: { id },
+    where: { id: projectId },
     select: { authorId: true },
   });
 
-export const getProjects = async (id: number) =>
-  await prisma.project.findMany({ where: { id } });
+// get all projects
+export const getProjects = async (authorId: number) =>
+  await prisma.project.findMany({ where: { authorId } });
+// getProjects(15).then((res) => console.log(res));
+// getProjects(200).then((res) => console.log(res));
+
+export const getProject = async (projectId: number) =>
+  await prisma.project.findUnique({ where: { id: projectId } });
+// getProject(11).then((res) => console.log(res));
+// getProject(200).then((res) => console.log(res));
+
+export const createProject = async ({ authorId, title }: ProjectAuthorId) => {
+  try {
+    return await prisma.project.create({
+      data: { title, author: { connect: { id: authorId } } },
+    });
+  } catch (e) {
+    console.log(e, " err in createProject");
+    return false;
+  }
+};
+// createProject({ authorId: 15, title: "lol" }).then((res) => console.log(res));
+
+export const updateProject = async ({
+  newTitle,
+  projectId,
+}: UpdateprojectByProjectId) => {
+  try {
+    return await prisma.project.update({
+      where: { id: projectId },
+      data: { title: newTitle },
+    });
+  } catch (e) {
+    console.log(e, " err in updateProject");
+    return false;
+  }
+};
+// updateProject({ newTitle: "new project1", projectId: 11 }).then((res) =>
+//   console.log(res)
+// );
+
+export const deleteProject = async (projectId: number) => {
+  try {
+    return !!(await prisma.project.delete({ where: { id: projectId } }));
+  } catch (e) {
+    console.log(e, "err in deleteProject");
+    return false;
+  }
+};
+// deleteProject(15).then((res) => console.log(res));

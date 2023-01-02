@@ -52,13 +52,23 @@ export interface UpdateTodo {
   id: number;
 }
 
-export interface Project {
+export interface ProjectAuthorId {
   title: string;
   authorId: number;
 }
 
-export interface UpdateProject {
+export interface Project {
+  title: string;
+  projectId: number;
+}
+
+export interface UpdateProjectByAuthorId {
   newTitle: string;
-  id: number;
+  projectId: number;
   authorId: number;
+}
+
+export interface UpdateprojectByProjectId {
+  newTitle: string;
+  projectId: number;
 }
