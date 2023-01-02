@@ -15,8 +15,11 @@ export const getProjects = async (authorId: number) =>
 // getProjects(200).then((res) => console.log(res));
 
 export const getProject = async (projectId: number) =>
-  await prisma.project.findUnique({ where: { id: projectId } });
-// getProject(11).then((res) => console.log(res));
+  await prisma.project.findUnique({
+    where: { id: projectId },
+    include: { todos: true },
+  });
+// getProject(16).then((res) => console.log(res));
 // getProject(200).then((res) => console.log(res));
 
 export const createProject = async ({ authorId, title }: ProjectAuthorId) => {

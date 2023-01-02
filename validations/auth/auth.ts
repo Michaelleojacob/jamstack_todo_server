@@ -1,7 +1,7 @@
 import { check, validationResult } from "express-validator";
 import { Request, Response, NextFunction } from "express";
 
-const validateSignUp = [
+export const validateSignUp = [
   check("username")
     .trim()
     .escape()
@@ -26,7 +26,7 @@ const validateSignUp = [
   },
 ];
 
-const validateSignIn = [
+export const validateSignIn = [
   check("username")
     .trim()
     .escape()
@@ -48,5 +48,3 @@ const validateSignIn = [
     next();
   },
 ];
-
-export { validateSignUp, validateSignIn };
