@@ -43,18 +43,20 @@ export const updateTodo = async ({
   updateTodoData: UpdateTodo;
 }) => {
   try {
+    const { title, desc, prio, due, done, notes, projectId, id } =
+      updateTodoData;
+    const todo = await getTodo(id);
+    if (!todo) throw Error("no todo found");
     return prisma.todo.update({
-      where: { id: updateTodoData.id },
+      where: { id },
       data: {
-        title: updateTodoData.title,
-        desc: updateTodoData.desc,
-        prio: updateTodoData.prio,
-        due: updateTodoData.due,
-        done: updateTodoData.done,
-        notes: updateTodoData.notes,
-        project: updateTodoData.projectId
-          ? { connect: { id: updateTodoData.projectId } }
-          : undefined,
+        title: title ? title : todo.title,
+        desc: desc ? desc : todo.desc,
+        prio: prio ? prio : todo.prio,
+        due: due ? due : todo.due,
+        done: done ? done : todo.done,
+        notes: notes ? notes : todo.notes,
+        project: projectId ? { connect: { id: projectId } } : undefined,
       },
     });
   } catch (e) {

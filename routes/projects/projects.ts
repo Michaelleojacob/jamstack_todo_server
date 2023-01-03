@@ -17,7 +17,7 @@ const projectRouter = express.Router();
 projectRouter.get("/", verifyToken, getAllprojects);
 
 // get single project (with todos)
-projectRouter.get("/:id", verifyToken, getSpecificProject);
+projectRouter.get("/:projectId", verifyToken, getSpecificProject);
 
 // create project
 projectRouter.post(
@@ -29,13 +29,13 @@ projectRouter.post(
 
 // update a single project
 projectRouter.put(
-  "/:id",
+  "/:projectId",
   verifyToken,
   sanitizeUpdateProject,
   updateProjectController
 );
 
 // delete a project
-projectRouter.delete("/:id", verifyToken, deleteProjectController);
+projectRouter.delete("/:projectId", verifyToken, deleteProjectController);
 
 export default projectRouter;

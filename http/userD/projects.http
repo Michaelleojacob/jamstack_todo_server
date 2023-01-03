@@ -15,7 +15,7 @@ get http://localhost:3002/projects/
 
 ###
 
-get http://localhost:3002/projects/14
+get http://localhost:3002/projects/22
 
 
 ###
@@ -24,18 +24,18 @@ post http://localhost:3002/projects/
 Content-Type: application/json
 
 {
-  "title":"my fourth project"
+  "title":"delete this project"
 }
 ###
 
-put http://localhost:3002/projects/20
+put http://localhost:3002/projects/21
 Content-Type: application/json
 
 {
-  "newTitle":"updating my third project"
+  "newTitle":"updating project 21"
 }
 
 ###
 
-delete http://localhost:3002/projects/20
+delete http://localhost:3002/projects/22
 
