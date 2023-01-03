@@ -23,16 +23,17 @@ post http://localhost:3002/todos/
 Content-Type: application/json
 
 {
-  "title":"my fourth todo!"
+  "title":"my 8th todo!"
 }
+
 
 ###
 
-put http://localhost:3002/todos/16
+put http://localhost:3002/todos/18
 Content-Type: application/json
 
 {
-  "title":"updated my fourth todo",
+  "title":"updated my 7.5th todo",
   "projectId":"18",
   "desc":"testing",
   "prio":"low"

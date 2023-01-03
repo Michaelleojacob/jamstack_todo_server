@@ -8,6 +8,7 @@ import {
   updateTodo,
 } from "../../db/todos";
 import { Todo, UpdateTodo } from "../../types/types";
+import { checkProjectExists, getProjectAuthorId } from "../../db/projects";
 
 export const getAllTodos = async (req: CRequest, res: Response) => {
   try {
@@ -35,14 +36,15 @@ export const getSpecificTodo = async (req: CRequest, res: Response) => {
 export const createTodoController = async (req: CRequest, res: Response) => {
   try {
     if (!req.userData) throw Error("no token");
+    const { title, desc, prio, due, done, notes, projectId } = req.body;
     const todoData: Todo = {
-      title: req.body.title,
-      desc: req.body.desc,
-      prio: req.body.prio,
-      due: req.body.due,
-      done: req.body.done,
-      notes: req.body.notes,
-      projectId: Number(req.body.projectId),
+      title,
+      desc,
+      prio,
+      due,
+      done,
+      notes,
+      projectId: Number(projectId),
       authorId: req.userData.id,
     };
     const todo = await createTodo({ todoData });

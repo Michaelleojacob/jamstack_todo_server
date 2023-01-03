@@ -13,12 +13,15 @@ export const sanitizeCreateTodo = [
     .isLength({ min: 1 })
     .withMessage("invalid project title")
     .bail(),
-  check("desc").trim().escape(),
-  check("prio").trim().escape(),
-  check("due").trim().escape(),
-  check("done").trim().escape().isBoolean(),
-  check("notes").escape(),
-  check("projectId").trim().escape().toInt(),
+  check("desc").optional({ nullable: true, checkFalsy: true }).trim().escape(),
+  check("prio").optional({ nullable: true, checkFalsy: true }).trim().escape(),
+  check("due").optional({ nullable: true, checkFalsy: true }).trim().escape(),
+  check("done").optional({ nullable: true, checkFalsy: true }).trim().escape(),
+  check("notes").optional({ nullable: true, checkFalsy: true }).escape(),
+  check("projectId")
+    .optional({ nullable: true, checkFalsy: true })
+    .trim()
+    .escape(),
   (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -30,13 +33,16 @@ export const sanitizeCreateTodo = [
   },
 ];
 export const sanitizeUpdateTodo = [
-  check("title").trim().escape(),
-  check("desc").trim().escape(),
-  check("prio").trim().escape(),
-  check("due").trim().escape(),
-  check("done").trim().escape(),
-  check("notes").trim().escape(),
-  check("projectId").trim().escape(),
+  check("title").optional({ nullable: true, checkFalsy: true }).trim().escape(),
+  check("desc").optional({ nullable: true, checkFalsy: true }).trim().escape(),
+  check("prio").optional({ nullable: true, checkFalsy: true }).trim().escape(),
+  check("due").optional({ nullable: true, checkFalsy: true }).trim().escape(),
+  check("done").optional({ nullable: true, checkFalsy: true }).trim().escape(),
+  check("notes").optional({ nullable: true, checkFalsy: true }).trim().escape(),
+  check("projectId")
+    .optional({ nullable: true, checkFalsy: true })
+    .trim()
+    .escape(),
   (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
