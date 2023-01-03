@@ -1,0 +1,42 @@
+// user D is id 25
+
+// sign in
+post http://localhost:3002/auth/signin
+Content-Type: application/json
+
+{
+  "username":"d",
+  "password":"d"
+}
+
+###
+
+get http://localhost:3002/todos
+
+###
+
+get http://localhost:3002/todos/14
+
+###
+
+post http://localhost:3002/todos/
+Content-Type: application/json
+
+{
+  "title":"my third todo!"
+}
+
+###
+
+put http://localhost:3002/todos/14/
+Content-Type: application/json
+
+{
+  "title":"updated my second todo",
+  "projectId":"18",
+  "desc":"adding a description"
+}
+
+###
+delete http://localhost:3002/todos/15
+

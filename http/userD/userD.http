@@ -1,3 +1,5 @@
+// user D is id 25
+
 
 // sign up
 post http://localhost:3002/auth/signup
@@ -15,8 +17,8 @@ post http://localhost:3002/auth/signin
 Content-Type: application/json
 
 {
-  "username":"c",
-  "password":"c"
+  "username":"d",
+  "password":"d"
 }
 
 ###
