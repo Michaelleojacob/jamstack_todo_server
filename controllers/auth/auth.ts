@@ -17,7 +17,7 @@ export const log_out = async (req: CRequest, res: Response) => {
 export const log_in = async (req: CRequest, res: Response) => {
   try {
     // if sender has a token, clear the token.
-    if (req.token) res.clearCookie("token");
+    if (req.signedCookies.token) res.clearCookie("token");
 
     // check to make sure user exists
     const user: User | null = await findUserByName(req.body.username);
@@ -42,10 +42,10 @@ export const log_in = async (req: CRequest, res: Response) => {
     const token = createToken(userInfo);
 
     // send the user a cookie with the token data
-    res.cookie("token", token, { signed: true });
+    res.cookie("token", token, { signed: true, httpOnly: true });
 
     // remove token from this once done testing
-    return res.status(200).json({ msg: "logged in and token created", token });
+    return res.status(200).json({ msg: "logged in", token, userInfo });
   } catch (e) {
     console.log(e, `error in signin post`);
     return res.status(400).json({ msg: "err logging in" });
