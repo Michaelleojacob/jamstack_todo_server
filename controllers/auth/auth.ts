@@ -7,10 +7,10 @@ import createToken from "../../utils/auth/createToken";
 export const log_out = async (req: CRequest, res: Response) => {
   try {
     res.clearCookie("token");
-    return res.status(200).json({ msg: "logged out successfully" });
+    return res.status(200).json({ msg: "logged out", succ: true });
   } catch (e) {
     console.log(e, "err in log_out");
-    return res.status(400).json({ msg: "err in log_out" });
+    return res.status(400).json({ msg: "err in log_out", succ: false });
   }
 };
 
@@ -45,10 +45,12 @@ export const log_in = async (req: CRequest, res: Response) => {
     res.cookie("token", token, { signed: true, httpOnly: true });
 
     // remove token from this once done testing
-    return res.status(200).json({ msg: "logged in", token, userInfo });
+    return res
+      .status(200)
+      .json({ msg: "logged in", succ: true, token, userInfo });
   } catch (e) {
     console.log(e, `error in signin post`);
-    return res.status(400).json({ msg: "err logging in" });
+    return res.status(400).json({ msg: "err logging in", succ: false });
   }
 };
 
