@@ -18,9 +18,6 @@ export const log_in = async (req: CRequest, res: Response) => {
   try {
     // if sender has a token, clear the token.
     if (req.token) res.clearCookie("token");
-    console.log("this ran");
-    console.log(req.body.username);
-    console.log(req.body.password);
 
     // check to make sure user exists
     const user: User | null = await findUserByName(req.body.username);
