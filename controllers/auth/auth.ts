@@ -88,3 +88,20 @@ export const sign_up = async (req: Request, res: Response) => {
     return res.status(400).json({ msg: "error in sign up", succ: false });
   }
 };
+
+// validate token, and return user data. (app refresh / closed). This is to use the token to re-log, instead of the user relogging.
+export const refreshUser = async (req: CRequest, res: Response) => {
+  try {
+    // this passes verifyToken, so the token is valid.
+    if (!req.userData)
+      return res
+        .status(400)
+        .json({ msg: "no token - refreshUser", succ: false });
+    return res
+      .status(200)
+      .json({ msg: "got user info", userInfo: req.userData, succ: true });
+  } catch (e) {
+    console.log(e, "error in refreshUser");
+    return res.status(400).json({ msg: "error in refreshUser", succ: false });
+  }
+};

@@ -12,10 +12,12 @@ export const getAllprojects = async (req: CRequest, res: Response) => {
   try {
     if (!req.userData) throw Error("no token");
     const projects = await getProjects(req.userData.id);
-    return res.status(200).json({ projects });
+    return res.status(200).json({ msg: "got projects", projects, succ: true });
   } catch (e) {
     console.log(e, "error in getAllProjects");
-    return res.status(400).json({ msg: "error in getAllProjects" });
+    return res
+      .status(400)
+      .json({ msg: "error in getAllProjects", succ: false });
   }
 };
 
