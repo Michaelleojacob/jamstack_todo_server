@@ -24,7 +24,7 @@ export const createTodo = async ({ todoData }: { todoData: Todo }) => {
       },
     });
   } catch (e) {
-    console.log(e, "err in createTodo");
+    console.log(e, "error in createTodo");
     return false;
   }
 };
@@ -60,7 +60,7 @@ export const updateTodo = async ({
       },
     });
   } catch (e) {
-    console.log(e, "err in updateTodo");
+    console.log(e, "error in updateTodo");
     return false;
   }
 };
@@ -75,7 +75,7 @@ export const deleteTodo = async (todoId: number) => {
   try {
     return !!(await prisma.todo.delete({ where: { id: todoId } }));
   } catch (e) {
-    console.log(e, "err in deleteTodo");
+    console.log(e, "error in deleteTodo");
     return false;
   }
 };

@@ -31,7 +31,7 @@ export const createProject = async ({ authorId, title }: ProjectAuthorId) => {
       data: { title, author: { connect: { id: authorId } } },
     });
   } catch (e) {
-    console.log(e, " err in createProject");
+    console.log(e, " error in createProject");
     return false;
   }
 };
@@ -47,7 +47,7 @@ export const updateProject = async ({
       data: { title: newTitle },
     });
   } catch (e) {
-    console.log(e, " err in updateProject");
+    console.log(e, " error in updateProject");
     return false;
   }
 };
@@ -59,7 +59,7 @@ export const deleteProject = async (projectId: number) => {
   try {
     return !!(await prisma.project.delete({ where: { id: projectId } }));
   } catch (e) {
-    console.log(e, "err in deleteProject");
+    console.log(e, "error in deleteProject");
     return false;
   }
 };

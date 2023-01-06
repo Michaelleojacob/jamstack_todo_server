@@ -9,8 +9,8 @@ export const log_out = async (req: CRequest, res: Response) => {
     res.clearCookie("token");
     return res.status(200).json({ msg: "logged out", succ: true });
   } catch (e) {
-    console.log(e, "err in log_out");
-    return res.status(400).json({ msg: "err in log_out", succ: false });
+    console.log(e, "error in log_out");
+    return res.status(400).json({ msg: "error in log_out", succ: false });
   }
 };
 
@@ -50,7 +50,7 @@ export const log_in = async (req: CRequest, res: Response) => {
       .json({ msg: "logged in", succ: true, token, userInfo });
   } catch (e) {
     console.log(e, `error in signin post`);
-    return res.status(400).json({ msg: "err logging in", succ: false });
+    return res.status(400).json({ msg: "error logging in", succ: false });
   }
 };
 
@@ -62,8 +62,8 @@ export const sign_up = async (req: Request, res: Response) => {
     // check if name is taken
     const checkName = await isNameAvailable(username);
 
-    // if it is taken - throw error
-    if (checkName) throw Error("name taken");
+    // if it is taken - throw Error
+    if (checkName) res.status(400).json({ msg: "name taken", succ: false });
 
     // hash the password from the body
     const hash = await hashPassword(password);
@@ -72,12 +72,13 @@ export const sign_up = async (req: Request, res: Response) => {
     const user = await createUser(username, hash);
 
     // if something went wrong trying to create the user
-    if (!user) throw Error("err creating user");
+    if (!user)
+      res.status(400).json({ msg: "error creating user", succ: false });
 
     // user created successfully.
-    return res.status(201).json({ msg: `user ${user.username} created` });
+    return res.status(201).json({ msg: `user created`, succ: true });
   } catch (e) {
-    console.log(e, "err in /signupRouter");
-    res.status(400).json({ msg: "err in sign up" });
+    console.log(e, "error in /signupRouter");
+    res.status(400).json({ msg: "error in sign up", succ: false });
   }
 };

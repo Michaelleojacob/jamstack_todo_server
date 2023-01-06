@@ -32,7 +32,7 @@
 //     }
 //   } catch (e) {
 //     console.log(`error in todoRouter post`, e);
-//     return res.status(400).json({ msg: "err in todoRouter post" });
+//     return res.status(400).json({ msg: "error in todoRouter post" });
 //   }
 // });
 
@@ -61,7 +61,7 @@
 //     try {
 //     } catch (e) {
 //       console.log(e);
-//       return res.status(400).json({ msg: "err updating todo" });
+//       return res.status(400).json({ msg: "error updating todo" });
 //     }
 //   }
 // );
@@ -77,7 +77,7 @@
 //         await deleteTodo(id);
 //         return res.status(200).json({ msg: `deleted todo ${id}` });
 //       }
-//       throw new Error("no userData in delete todo http request");
+//       throw new error("no userData in delete todo http request");
 //     } catch (e) {
 //       console.log(e);
 //       return res.status(400).json({ msg: `no todo deleted.` });

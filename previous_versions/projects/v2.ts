@@ -59,7 +59,7 @@
 //       data: { title, author: { connect: { id: userId } } },
 //     });
 //   } catch (e) {
-//     console.log(e, `err in createProject`);
+//     console.log(e, `error in createProject`);
 //     return false;
 //   }
 // };
@@ -78,7 +78,7 @@
 //     });
 //     return data;
 //   } catch (e) {
-//     console.log(e, `err in createProj`);
+//     console.log(e, `error in createProj`);
 //     return false;
 //   }
 // };
@@ -93,7 +93,7 @@
 //     });
 //     return true;
 //   } catch (e) {
-//     console.log(e, `err in deleteproject`);
+//     console.log(e, `error in deleteproject`);
 //     return false;
 //   }
 // };

@@ -3,12 +3,12 @@ const checkId = (id: number) => {
     if (id === 5) {
       console.log("this worked");
     } else {
-      const err = new Error("lol");
-      delete err.stack;
-      throw err;
+      const error = new error("lol");
+      delete error.stack;
+      throw Error;
     }
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
   }
 };
 

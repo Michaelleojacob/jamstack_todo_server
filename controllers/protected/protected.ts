@@ -8,8 +8,8 @@ const protectedEndPoint = async (req: CRequest, res: Response) => {
       .status(200)
       .json({ msg: "hit protected end point", user: req.userData });
   } catch (e) {
-    console.log(e, "err getting protected end point");
-    return res.status(400).json({ msg: "err getting protected end point" });
+    console.log(e, "error getting protected end point");
+    return res.status(400).json({ msg: "error getting protected end point" });
   }
 };
 

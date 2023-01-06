@@ -16,8 +16,8 @@ export const getAllTodos = async (req: CRequest, res: Response) => {
     const todos = await getTodos(req.userData.id);
     return res.status(200).json({ msg: "got all todos", todos });
   } catch (e) {
-    console.log(e, "err in getAllTodos controller");
-    return res.status(400).json({ msg: "err in getAllTodos controller" });
+    console.log(e, "error in getAllTodos controller");
+    return res.status(400).json({ msg: "error in getAllTodos controller" });
   }
 };
 
@@ -28,8 +28,8 @@ export const getSpecificTodo = async (req: CRequest, res: Response) => {
     const todo = await getTodo(Number(req.params.todoId));
     return res.status(200).json({ msg: "got todo", todo });
   } catch (e) {
-    console.log(e, "err in getSpecificTodo controller");
-    return res.status(400).json({ msg: "err in getSpecificTodo controller" });
+    console.log(e, "error in getSpecificTodo controller");
+    return res.status(400).json({ msg: "error in getSpecificTodo controller" });
   }
 };
 
@@ -50,8 +50,8 @@ export const createTodoController = async (req: CRequest, res: Response) => {
     const todo = await createTodo({ todoData });
     return res.status(200).json({ msg: "created todo", todo });
   } catch (e) {
-    console.log(e, "err in createTodoController");
-    return res.status(400).json({ msg: "err in createTodoController" });
+    console.log(e, "error in createTodoController");
+    return res.status(400).json({ msg: "error in createTodoController" });
   }
 };
 
@@ -72,8 +72,8 @@ export const updateTodoController = async (req: CRequest, res: Response) => {
     const updatedTodo = await updateTodo({ updateTodoData });
     return res.status(200).json({ msg: "todo updated", updatedTodo });
   } catch (e) {
-    console.log(e, "err in updateTodoController");
-    return res.status(400).json({ msg: "err in updateTodoController" });
+    console.log(e, "error in updateTodoController");
+    return res.status(400).json({ msg: "error in updateTodoController" });
   }
 };
 
@@ -84,7 +84,7 @@ export const deleteTodoController = async (req: CRequest, res: Response) => {
     const deleteResult = await deleteTodo(Number(req.params.todoId));
     return res.status(200).json({ msg: "todo was deleted", deleteResult });
   } catch (e) {
-    console.log(e, "err in deleteTodoController");
-    return res.status(400).json({ msg: "err in deleteTodoController" });
+    console.log(e, "error in deleteTodoController");
+    return res.status(400).json({ msg: "error in deleteTodoController" });
   }
 };

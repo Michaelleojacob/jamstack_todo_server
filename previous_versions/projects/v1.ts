@@ -21,7 +21,7 @@
 //       return res.status(200).json({ msg: "got projects", projects });
 //     }
 //   } catch (e) {
-//     return res.status(400).json({ msg: "err getting all projects" });
+//     return res.status(400).json({ msg: "error getting all projects" });
 //   }
 // });
 
@@ -35,7 +35,7 @@
 //       return res.status(200).json({ msg: "got project", projects });
 //     }
 //   } catch (e) {
-//     return res.status(400).json({ msg: "err getting all projects" });
+//     return res.status(400).json({ msg: "error getting all projects" });
 //   }
 // });
 
@@ -49,7 +49,7 @@
 //     }
 //   } catch (e) {
 //     console.log(e);
-//     return res.status(400).json({ msg: "err creating proj", e });
+//     return res.status(400).json({ msg: "error creating proj", e });
 //   }
 // });
 
@@ -71,7 +71,7 @@
 //         return res.status(200).json({ msg: "updated project", updatedProj });
 //       }
 //     } catch (e) {
-//       return res.status(400).json({ msg: "err in updateProject", e });
+//       return res.status(400).json({ msg: "error in updateProject", e });
 //     }
 //   }
 // );
@@ -91,7 +91,7 @@
 //       return res.status(200).json({ msg: "deleted project successfully" });
 //     } catch (e) {
 //       console.log(e);
-//       return res.status(400).json({ msg: "err deleting based on id", e });
+//       return res.status(400).json({ msg: "error deleting based on id", e });
 //     }
 //   }
 // );

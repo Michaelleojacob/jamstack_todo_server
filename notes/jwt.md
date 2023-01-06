@@ -20,7 +20,7 @@ passport.use(
           }
           return cb(null, user, { message: "Logged In Successfully" });
         })
-        .catch((err) => cb(err));
+        .catch((error) => cb(error));
     }
   )
 );
@@ -35,16 +35,16 @@ const authRouter = express.Router();
 import jwt from "jsonwebtoken";
 /* POST login. */
 authRouter.post("/login", function (req, res, next) {
-  passport.authenticate("local", { session: false }, (err, user, msg) => {
-    if (err || !user) {
+  passport.authenticate("local", { session: false }, (error, user, msg) => {
+    if (error || !user) {
       return res.status(400).json({
         message: "Something is not right",
         user: user,
       });
     }
-    req.login(user, { session: false }, (err) => {
-      if (err) {
-        res.send(err);
+    req.login(user, { session: false }, (error) => {
+      if (error) {
+        res.send(error);
       }
       // generate a signed son web token with the contents of user object and return it in the response
       const token = jwt.sign(user, "your_jwt_secret");
@@ -71,8 +71,8 @@ passport.use(
         .then((user) => {
           return cb(null, user);
         })
-        .catch((err) => {
-          return cb(err);
+        .catch((error) => {
+          return cb(error);
         });
     }
   )
@@ -82,15 +82,15 @@ passport.use(
 ```js
 //routes/user.js
 
-const userRouter = express.Router();
+const userrorouter = express.Router();
 
 /* GET users listing. */
-userRouter.get("/", function (req, res, next) {
+userrorouter.get("/", function (req, res, next) {
   res.send("respond with a resource");
 });
 
 /* GET user profile. */
-userRouter.get("/profile", function (req, res, next) {
+userrorouter.get("/profile", function (req, res, next) {
   res.send(req.user);
 });
 ```
@@ -118,9 +118,9 @@ opts.issuer = "accounts.examplesoft.com";
 opts.audience = "yoursite.net";
 passport.use(
   new JwtStrategy(opts, function (jwt_payload, done) {
-    User.findOne({ id: jwt_payload.sub }, function (err, user) {
-      if (err) {
-        return done(err, false);
+    User.findOne({ id: jwt_payload.sub }, function (error, user) {
+      if (error) {
+        return done(error, false);
       }
       if (user) {
         return done(null, user);

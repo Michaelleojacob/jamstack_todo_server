@@ -14,8 +14,8 @@ export const getAllprojects = async (req: CRequest, res: Response) => {
     const projects = await getProjects(req.userData.id);
     return res.status(200).json({ projects });
   } catch (e) {
-    console.log(e, "err in getAllProjects");
-    return res.status(400).json({ msg: "err in getAllProjects" });
+    console.log(e, "error in getAllProjects");
+    return res.status(400).json({ msg: "error in getAllProjects" });
   }
 };
 
@@ -27,8 +27,8 @@ export const getSpecificProject = async (req: CRequest, res: Response) => {
     const project = await getProject(projectId);
     return res.status(200).json({ project });
   } catch (e) {
-    console.log(e, "err in getSpecificProject");
-    return res.status(400).json({ msg: "err in getSpecificProject" });
+    console.log(e, "error in getSpecificProject");
+    return res.status(400).json({ msg: "error in getSpecificProject" });
   }
 };
 
@@ -41,8 +41,8 @@ export const createProjectController = async (req: CRequest, res: Response) => {
     const project = await createProject({ authorId: req.userData.id, title });
     return res.status(200).json({ project });
   } catch (e) {
-    console.log(e, "err in createProjectController");
-    return res.status(400).json({ msg: "err in createProjectController" });
+    console.log(e, "error in createProjectController");
+    return res.status(400).json({ msg: "error in createProjectController" });
   }
 };
 
@@ -55,8 +55,8 @@ export const updateProjectController = async (req: CRequest, res: Response) => {
     const updatedProject = await updateProject({ newTitle, projectId });
     return res.status(200).json({ updatedProject });
   } catch (e) {
-    console.log(e, "err in updateProjectController");
-    return res.status(400).json({ msg: "err in updateProjectController" });
+    console.log(e, "error in updateProjectController");
+    return res.status(400).json({ msg: "error in updateProjectController" });
   }
 };
 
@@ -68,7 +68,7 @@ export const deleteProjectController = async (req: CRequest, res: Response) => {
     const result = await deleteProject(id);
     return res.status(200).json({ result });
   } catch (e) {
-    console.log(e, "err in deleteProjectController");
-    return res.status(400).json({ msg: "err in deleteProjectController" });
+    console.log(e, "error in deleteProjectController");
+    return res.status(400).json({ msg: "error in deleteProjectController" });
   }
 };
