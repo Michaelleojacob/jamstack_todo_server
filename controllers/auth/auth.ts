@@ -23,14 +23,19 @@ export const log_in = async (req: CRequest, res: Response) => {
     const user: User | null = await findUserByName(req.body.username);
 
     // if no user was found
-    if (!user) return res.status(400).json({ msg: "no user found" });
+    if (!user)
+      return res
+        .status(400)
+        .json({ msg: "incorrect username or password", succ: false });
 
     // compare body password and hash in the db
     const match = await comparePassword(req.body.password, user.password);
 
     // if password and hash did not match
     if (!match)
-      return res.status(400).json({ msg: "incorrect username or password" });
+      return res
+        .status(400)
+        .json({ msg: "incorrect username or password", succ: false });
 
     /**
      * creating an object without the password(hash) info.
@@ -63,7 +68,8 @@ export const sign_up = async (req: Request, res: Response) => {
     const checkName = await isNameAvailable(username);
 
     // if it is taken - throw Error
-    if (checkName) res.status(400).json({ msg: "name taken", succ: false });
+    if (checkName)
+      return res.status(400).json({ msg: "name taken", succ: false });
 
     // hash the password from the body
     const hash = await hashPassword(password);
@@ -73,12 +79,12 @@ export const sign_up = async (req: Request, res: Response) => {
 
     // if something went wrong trying to create the user
     if (!user)
-      res.status(400).json({ msg: "error creating user", succ: false });
+      return res.status(400).json({ msg: "error creating user", succ: false });
 
     // user created successfully.
     return res.status(201).json({ msg: `user created`, succ: true });
   } catch (e) {
     console.log(e, "error in /signupRouter");
-    res.status(400).json({ msg: "error in sign up", succ: false });
+    return res.status(400).json({ msg: "error in sign up", succ: false });
   }
 };
