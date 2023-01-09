@@ -41,10 +41,14 @@ export const createProjectController = async (req: CRequest, res: Response) => {
     if (!req.userData) throw Error("no token");
     const { title } = req.body;
     const project = await createProject({ authorId: req.userData.id, title });
-    return res.status(200).json({ project });
+    return res
+      .status(200)
+      .json({ project, succ: true, msg: "created project" });
   } catch (e) {
     console.log(e, "error in createProjectController");
-    return res.status(400).json({ msg: "error in createProjectController" });
+    return res
+      .status(400)
+      .json({ msg: "error in createProjectController", succ: false });
   }
 };
 
@@ -68,9 +72,16 @@ export const deleteProjectController = async (req: CRequest, res: Response) => {
     if (!req.params.projectId) throw Error("no projectId provided");
     const id = Number(req.params.projectId);
     const result = await deleteProject(id);
-    return res.status(200).json({ result });
+    if (result)
+      return res.status(200).json({ succ: true, msg: "project deleted" });
+    if (!result)
+      return res
+        .status(400)
+        .json({ msg: "error in deleteProjectController", succ: false });
   } catch (e) {
     console.log(e, "error in deleteProjectController");
-    return res.status(400).json({ msg: "error in deleteProjectController" });
+    return res
+      .status(400)
+      .json({ msg: "error in deleteProjectController", succ: false });
   }
 };

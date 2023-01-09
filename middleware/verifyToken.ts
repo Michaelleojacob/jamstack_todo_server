@@ -8,7 +8,7 @@ const verifyToken = (req: CRequest, res: Response, next: NextFunction) => {
     const { token }: { token: string } = req.signedCookies;
 
     // if no token
-    if (!token) return res.status(403).json({ error: "no token" });
+    if (!token) throw Error();
 
     /**
      * either verify passes and next() is called
@@ -27,6 +27,7 @@ const verifyToken = (req: CRequest, res: Response, next: NextFunction) => {
 
     next();
   } catch (e) {
+    res.clearCookie("token");
     console.log(e, "error in verifyToken");
     return res.status(400).json({ msg: "bad token", action: "delete_token" });
   }
