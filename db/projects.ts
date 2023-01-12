@@ -38,20 +38,20 @@ export const createProject = async ({ authorId, title }: ProjectAuthorId) => {
 // createProject({ authorId: 15, title: "lol" }).then((res) => console.log(res));
 
 export const updateProject = async ({
-  newTitle,
+  title,
   projectId,
 }: UpdateprojectByProjectId) => {
   try {
     return await prisma.project.update({
       where: { id: projectId },
-      data: { title: newTitle },
+      data: { title },
     });
   } catch (e) {
     console.log(e, " error in updateProject");
     return false;
   }
 };
-// updateProject({ newTitle: "new project1", projectId: 11 }).then((res) =>
+// updateProject({ title: "new project1", projectId: 11 }).then((res) =>
 //   console.log(res)
 // );
 

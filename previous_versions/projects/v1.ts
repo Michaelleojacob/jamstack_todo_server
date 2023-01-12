@@ -60,10 +60,10 @@
 //   async (req: CRequest, res: Response) => {
 //     try {
 //       if (req.userData) {
-//         const { newTitle } = req.body;
+//         const { title } = req.body;
 //         const id = Number(req.params.id);
 //         const updatedProj = await updateProject({
-//           newTitle,
+//           title,
 //           id,
 //           authorId: req.userData.id,
 //         });

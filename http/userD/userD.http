@@ -50,7 +50,7 @@ put http://localhost:3002/projects/17
 Content-Type: application/json
 
 {
-  "newTitle":"updated my second project's title again!"
+  "title":"updated my second project's title again!"
 }
 
 ###

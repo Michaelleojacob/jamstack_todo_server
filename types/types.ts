@@ -64,12 +64,12 @@ export interface Project {
 }
 
 export interface UpdateProjectByAuthorId {
-  newTitle: string;
+  title: string;
   projectId: number;
   authorId: number;
 }
 
 export interface UpdateprojectByProjectId {
-  newTitle: string;
+  title: string;
   projectId: number;
 }

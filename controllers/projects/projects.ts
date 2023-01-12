@@ -10,7 +10,8 @@ import { CRequest } from "../../types/types";
 
 export const getAllprojects = async (req: CRequest, res: Response) => {
   try {
-    if (!req.userData) throw Error("no token");
+    if (!req.userData)
+      return res.status(400).json({ msg: "no token", succ: false });
     const projects = await getProjects(req.userData.id);
     return res.status(200).json({ msg: "got projects", projects, succ: true });
   } catch (e) {
@@ -23,7 +24,8 @@ export const getAllprojects = async (req: CRequest, res: Response) => {
 
 export const getSpecificProject = async (req: CRequest, res: Response) => {
   try {
-    if (!req.userData) throw Error("no token");
+    if (!req.userData)
+      return res.status(400).json({ msg: "no token", succ: false });
     if (!req.params.projectId) throw Error("no projectId provided");
     const projectId = Number(req.params.projectId);
     const project = await getProject(projectId);
@@ -38,7 +40,8 @@ export const getSpecificProject = async (req: CRequest, res: Response) => {
 // can't have two createProjects
 export const createProjectController = async (req: CRequest, res: Response) => {
   try {
-    if (!req.userData) throw Error("no token");
+    if (!req.userData)
+      return res.status(400).json({ msg: "no token", succ: false });
     const { title } = req.body;
     const project = await createProject({ authorId: req.userData.id, title });
     return res
@@ -55,20 +58,26 @@ export const createProjectController = async (req: CRequest, res: Response) => {
 // db call is called updateProject, so I added controller
 export const updateProjectController = async (req: CRequest, res: Response) => {
   try {
-    if (!req.userData) throw Error("no token");
-    const { newTitle } = req.body;
+    if (!req.userData)
+      return res.status(400).json({ msg: "no token", succ: false });
+    const { title }: { title: string } = req.body;
     const projectId = Number(req.params.projectId);
-    const updatedProject = await updateProject({ newTitle, projectId });
-    return res.status(200).json({ updatedProject });
+    const updatedProject = await updateProject({ title, projectId });
+    return res
+      .status(200)
+      .json({ msg: "updated project", updatedProject, succ: true });
   } catch (e) {
     console.log(e, "error in updateProjectController");
-    return res.status(400).json({ msg: "error in updateProjectController" });
+    return res
+      .status(400)
+      .json({ msg: "error in updateProjectController", succ: false });
   }
 };
 
 export const deleteProjectController = async (req: CRequest, res: Response) => {
   try {
-    if (!req.userData) throw Error("no token");
+    if (!req.userData)
+      return res.status(400).json({ msg: "no token", succ: false });
     if (!req.params.projectId) throw Error("no projectId provided");
     const id = Number(req.params.projectId);
     const result = await deleteProject(id);

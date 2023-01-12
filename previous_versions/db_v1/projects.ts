@@ -21,10 +21,10 @@ const createProject = async ({ title, authorId }: Project) =>
     data: { title, author: { connect: { id: authorId } } },
   });
 
-const updateProject = async ({ newTitle, id, authorId }: UpdateProject) =>
+const updateProject = async ({ title, id, authorId }: UpdateProject) =>
   await prisma.project.updateMany({
     where: { id, authorId },
-    data: { title: newTitle },
+    data: { title: title },
   });
 
 const deleteProjectById = async (id: number) =>

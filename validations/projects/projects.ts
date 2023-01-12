@@ -21,7 +21,7 @@ export const sanitizeCreateProject = [
 ];
 
 export const sanitizeUpdateProject = [
-  check("newTitle")
+  check("title")
     .trim()
     .escape()
     .notEmpty()
