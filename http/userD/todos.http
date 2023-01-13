@@ -29,14 +29,14 @@ Content-Type: application/json
 
 ###
 
-put http://localhost:3002/todos/18
+put http://localhost:3002/todos/19
 Content-Type: application/json
 
 {
-  "title":"updated my 7.5th todo",
-  "projectId":"18",
+  "title":"adding to project",
+  "projectId":"42",
   "desc":"testing",
-  "prio":"low"
+  "prio":"medium"
 }
 
 ###
