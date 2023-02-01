@@ -47,7 +47,12 @@ export const log_in = async (req: CRequest, res: Response) => {
     const token = createToken(userInfo);
 
     // send the user a cookie with the token data
-    res.cookie("token", token, { signed: true, httpOnly: true });
+    res.cookie("token", token, {
+      signed: true,
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
 
     // remove token from this once done testing
     return res
