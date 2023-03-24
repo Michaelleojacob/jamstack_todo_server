@@ -33,7 +33,7 @@ export interface Todo {
   title: string;
   desc?: string;
   notes?: string;
-  prio?: "low" | "medium" | "high";
+  prio?: number;
   due?: Date;
   creation?: Date;
   done?: boolean;
@@ -45,7 +45,7 @@ export interface UpdateTodo {
   title?: string;
   desc?: string;
   notes?: string;
-  prio?: "low" | "medium" | "high";
+  prio?: number;
   due?: Date;
   creation?: Date;
   done?: boolean;

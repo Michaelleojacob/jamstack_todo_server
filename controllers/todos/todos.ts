@@ -8,7 +8,6 @@ import {
   updateTodo,
 } from "../../db/todos";
 import { Todo, UpdateTodo } from "../../types/types";
-import { checkProjectExists, getProjectAuthorId } from "../../db/projects";
 
 export const getAllTodos = async (req: CRequest, res: Response) => {
   try {

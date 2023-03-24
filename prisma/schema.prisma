@@ -20,7 +20,7 @@ model Todo {
   id        Int       @id @unique @default(autoincrement())
   title     String
   desc      String?
-  prio      String?
+  prio      Int?
   done      Boolean   @default(false)
   authorId  Int
   projectId Int?
