@@ -14,13 +14,18 @@ export const sanitizeCreateTodo = [
     .withMessage("invalid project title")
     .bail(),
   check("desc").optional({ nullable: true, checkFalsy: true }).trim().escape(),
-  check("prio").optional({ nullable: true, checkFalsy: true }).trim().escape(),
+  check("prio")
+    .optional({ nullable: true, checkFalsy: true })
+    .trim()
+    .escape()
+    .toInt(),
   check("due").optional({ nullable: true, checkFalsy: true }).trim().escape(),
   check("done").optional({ nullable: true, checkFalsy: true }).trim().escape(),
   check("notes").optional({ nullable: true, checkFalsy: true }).escape(),
   check("projectId")
     .optional({ nullable: true, checkFalsy: true })
     .trim()
+    .toInt()
     .escape(),
   (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
@@ -35,13 +40,18 @@ export const sanitizeCreateTodo = [
 export const sanitizeUpdateTodo = [
   check("title").optional({ nullable: true, checkFalsy: true }).trim().escape(),
   check("desc").optional({ nullable: true, checkFalsy: true }).trim().escape(),
-  check("prio").optional({ nullable: true, checkFalsy: true }).trim().escape(),
+  check("prio")
+    .optional({ nullable: true, checkFalsy: true })
+    .trim()
+    .escape()
+    .toInt(),
   check("due").optional({ nullable: true, checkFalsy: true }).trim().escape(),
   check("done").optional({ nullable: true, checkFalsy: true }).trim().escape(),
   check("notes").optional({ nullable: true, checkFalsy: true }).trim().escape(),
   check("projectId")
     .optional({ nullable: true, checkFalsy: true })
     .trim()
+    .toInt()
     .escape(),
   (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);

@@ -43,7 +43,7 @@ export const createTodoController = async (req: CRequest, res: Response) => {
     const todoData: Todo = {
       title,
       desc,
-      prio,
+      prio: Number(prio),
       due,
       done,
       notes,
@@ -64,14 +64,15 @@ export const updateTodoController = async (req: CRequest, res: Response) => {
   try {
     if (!req.userData) throw Error("no token");
     if (!req.params.todoId) throw Error("no todoId provided");
+    const { title, desc, prio, due, done, notes, projectId, id } = req.body;
     const updateTodoData: UpdateTodo = {
-      title: req.body.title,
-      desc: req.body.desc,
-      prio: req.body.prio,
-      due: req.body.due,
-      done: req.body.done,
-      notes: req.body.notes,
-      projectId: Number(req.body.projectId),
+      title: title,
+      desc: desc,
+      prio: Number(prio),
+      due: due,
+      done: done,
+      notes: notes,
+      projectId: Number(projectId),
       id: Number(req.params.todoId),
     };
     const updatedTodo = await updateTodo({ updateTodoData });
