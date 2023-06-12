@@ -10,7 +10,10 @@ export const getProjectAuthorId = async (projectId: number) =>
 
 // get all projects
 export const getProjects = async (authorId: number) =>
-  await prisma.project.findMany({ where: { authorId } });
+  await prisma.project.findMany({
+    where: { authorId },
+    orderBy: { createdAt: "asc" },
+  });
 // getProjects(15).then((res) => console.log(res));
 // getProjects(200).then((res) => console.log(res));
 

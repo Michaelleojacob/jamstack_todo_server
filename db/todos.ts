@@ -1,8 +1,14 @@
 import prisma from "../config/db";
 import { Todo, UpdateTodo } from "../types/types";
 
-export const getTodos = async (authorId: number) =>
-  await prisma.todo.findMany({ where: { authorId } });
+export const getTodos = async (authorId: number) => {
+  const todos = await prisma.todo.findMany({
+    where: { authorId },
+    orderBy: { createdAt: "asc" }, // Order by the createdAt field in ascending order
+  });
+
+  return todos;
+};
 
 export const getTodo = async (todoId: number) =>
   await prisma.todo.findUnique({ where: { id: todoId } });
