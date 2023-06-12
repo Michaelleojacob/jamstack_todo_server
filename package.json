@@ -6,7 +6,8 @@
   "scripts": {
     "kill": "sudo kill -9 $(sudo lsof -t -i:3002)",
     "dev": "npx nodemon server.ts",
-    "killdb": "npx ts-node killdb.ts"
+    "killdb": "npx ts-node killdb.ts",
+    "build":"npm install"
   },
   "keywords": [],
   "author": "",
